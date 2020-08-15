@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Aliases{% endblock %}
+
+{% block body %}
+<section>
+  <h1>Aliases</h1>
+  <p style="font-size: 18px; margin-top: 12px;">{{request.user.email}}</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Superbase</td>
+        <td>r8fjpc4fbj3fwf8bbc6p@forwardmail.rocks</td>
+        <td>Today</td>
+        <td style="color: #AAAAAA">
+          <a href="#"><clr-icon shape="disconnect" size="27"></clr-icon></a>
+          <a href="#"><clr-icon shape="trash" size="25"></clr-icon></a>
+          <a href="#"><clr-icon shape="edit" size="25"></clr-icon></a>
+        </td>
+      </tr>
+      <tr>
+        <td>Superbase</td>
+        <td>r8fjpc4fbj3fwf8bbc6p@forwardmail.rocks</td>
+        <td>Today</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Superbase</td>
+        <td>r8fjpc4fbj3fwf8bbc6p@forwardmail.rocks</td>
+        <td>Today</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+{% endblock %}
