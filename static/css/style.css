@@ -15,6 +15,10 @@ h3 {
     line-height: 26px;
 }
 
+a {
+    text-decoration: none !important;
+}
+
 input {
     background: #E0E0E0;
     border-radius: 5px;
@@ -101,4 +105,11 @@ tbody:before {
     display: block;
     line-height: 20px;
     text-indent: -99999px;
+}
+
+form label, .form label {
+    display: block;
+}
+form input, .form input {
+    width: 100%;
 }

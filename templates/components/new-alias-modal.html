@@ -9,7 +9,9 @@
       </div>
       <form id="new-alias-form" method="POST">{% csrf_token %}</form>
       <div class="modal-body">
-        {{ new_alias_form }}
+        <div class="form">
+          {{ new_alias_form }}
+        </div>
       </div>
       <div class="modal-footer">
         <button type="submit" form="new-alias-form" class="btn btn-primary">Create</button>

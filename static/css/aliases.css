@@ -2,7 +2,7 @@ table {
     margin-top: 46px;
 }
 
-tr clr-icon {
+tr .actions clr-icon {
     visibility: hidden;
 }
 

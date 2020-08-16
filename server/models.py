@@ -29,4 +29,4 @@ class Alias(models.Model):
     is_disconnected = models.BooleanField(default=False)
 
     def __str__(self):
-        return "{} to {}".format(address, user.email)
+        return "{} to {}".format(self.proxy_address, self.user.email)

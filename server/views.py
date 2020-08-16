@@ -12,9 +12,7 @@ class AliasPage(View):
     def post(self, request):
         form = NewAliasForm(request.POST)
         if form.is_valid():
-            # TODO: Create alias
             address = random_address()
-
             success = create_remote_alias(address, request.user.email)
             if success:
                 alias = Alias.objects.create(user_id=request.user.id, name=form.cleaned_data.get("alias_name"), proxy_address=address)
@@ -33,6 +31,32 @@ class AliasPage(View):
         }
         template = loader.get_template('aliases.html')
         return HttpResponse(template.render(context, request))
+
+class AliasAction(View):
+    def get(self, request, alias_id, method):
+        alias = Alias.objects.get(user_id=request.user.id, id=alias_id)
+        if not alias:
+            return redirect("home")
+        
+        if method == "disconnect":
+            alias.is_disconnected = not alias.is_disconnected
+            alias.save(update_fields=["is_disconnected"])
+        elif method == "delete":
+            alias.delete()
+
+        return redirect("home")
+
+    def post(self, request, alias_id, method):
+        alias = Alias.objects.get(user_id=request.user.id, id=alias_id)
+        if not alias:
+            return redirect("home")
+        
+        name = request.POST.get("alias_name")
+        if method == "update" and name:
+            alias.name = name
+            alias.save(update_fields=["name"])
+        
+        return redirect("home")
 
 class Register(generic.CreateView):
     form_class = CustomUserCreationForm

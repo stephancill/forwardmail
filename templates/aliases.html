@@ -16,6 +16,7 @@
 {% block body %}
 
 {% include "components/new-alias-modal.html" %}
+{% include "components/edit-alias-modal.html" %}
 
 <section>
   <div class="row">
@@ -23,9 +24,9 @@
       <h1>Aliases</h1>
       <p style="font-size: 18px; margin-top: 12px;">{{request.user.email}}</p>
     </div>
-    <div class="pull-right">
+    <div class="pull-right" style="padding: 15px;">
       <button data-toggle="modal" data-target="#create-alias-modal">
-        <clr-icon shape="plus-circle" size="27"></clr-icon>
+        <clr-icon shape="plus-circle" size="40"></clr-icon>
         <p style="margin-bottom: 0;">New</p>
       </button>
     </div>
@@ -35,22 +36,43 @@
   <table class="col">
     <thead>
       <tr>
+        <th></th>
         <th>Name</th>
         <th>Address</th>
-        <th>Date</th>
+        <th>When</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       {% for alias in aliases %}
       <tr>
-        <td>{{alias.name}}</td>
-        <td class="email"><span>{{alias.proxy_address}}</span> <clr-icon shape="copy" size="20"></clr-icon></td>
-        <td>{{alias.date}}</td>
+        <td style="text-align: center; color: #AAAAAA">
+          <span>
+            <clr-icon shape="{% if alias.is_disconnected %}disconnect{% else %}connect{% endif %}" size="27"></clr-icon>
+          </span>
+        </td>
+        <td>
+          <span>{{alias.name}}</span>
+        </td>
+        <td title="Click to copy">
+          <span class="email">
+            <span>{{alias.proxy_address}}</span> <span class="actions"><clr-icon shape="copy" size="20"></clr-icon></span> 
+          </span>
+        </td>
+        <td><span title="{{alias.date}}">{{alias.date|timesince}} ago</span> </td>
         <td style="color: #AAAAAA">
-          <a href="#" title="Disconnect"><clr-icon shape="disconnect" size="27"></clr-icon></a>
-          <a href="#" title="Remove"><clr-icon shape="trash" size="25"></clr-icon></a>
-          <a href="#" title="Edit"><clr-icon shape="edit" size="25"></clr-icon></a>
+          <div class="actions">
+            <a href="{% url 'alias_action' alias.id 'disconnect' %}" title="Disconnect">
+              <clr-icon shape="{% if alias.is_disconnected %}connect{% else %}disconnect{% endif %}" size="27"></clr-icon>
+            </a>
+            <a href="{% url 'alias_action' alias.id 'delete' %}" title="Remove" 
+            onclick="return confirm('Are you sure you would like to delete the alias \'{{alias.name}}\'')">
+              <clr-icon shape="trash" size="25"></clr-icon>
+            </a>
+            {% url 'alias_action' alias.id 'update' as form_url %}
+            <a data-toggle="modal" data-target="#edit-alias-modal" href="#" title="Edit" 
+            onclick="prepareEditModal({formURL: '{{form_url}}', value: '{{alias.name}}'})"><clr-icon shape="edit" size="25"></clr-icon></a>
+          </div>
         </td>
       </tr>
       {% endfor %}
