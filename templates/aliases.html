@@ -31,6 +31,7 @@
     </div>
   </div>
   
+  {% if aliases %}
   <table class="col">
     <thead>
       <tr>
@@ -41,16 +42,6 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Superbase</td>
-        <td class="email"><span>r8fjpc4fbj3fwf8bbc6p@forwardmail.rocks</span> <clr-icon shape="copy" size="20"></clr-icon></td>
-        <td>Today</td>
-        <td style="color: #AAAAAA">
-          <a href="#" title="Disconnect"><clr-icon shape="disconnect" size="27"></clr-icon></a>
-          <a href="#" title="Remove"><clr-icon shape="trash" size="25"></clr-icon></a>
-          <a href="#" title="Edit"><clr-icon shape="edit" size="25"></clr-icon></a>
-        </td>
-      </tr>
       {% for alias in aliases %}
       <tr>
         <td>{{alias.name}}</td>
@@ -65,6 +56,10 @@
       {% endfor %}
     </tbody>
   </table>
+  {% else %}
+  <h2>Aliases you  <a data-toggle="modal" data-target="#create-alias-modal" href="#">create</a> will end up here...</h2>
+
+  {% endif %}
 </section>
 
 

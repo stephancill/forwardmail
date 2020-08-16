@@ -9,8 +9,6 @@
       </div>
       <form id="new-alias-form" method="POST">{% csrf_token %}</form>
       <div class="modal-body">
-        <!-- <label style="display: block; color: black; font-weight: 500;" for="alias-name">Alias Name</label>
-        <input  id="alias-name" type="text" style="width: 100%;" form="new-alias-form"> -->
         {{ new_alias_form }}
       </div>
       <div class="modal-footer">
