@@ -36,3 +36,23 @@ function prepareEditModal({formURL, value}) {
   textInput.value = value
 }
 
+function onSearchInputChange() {
+  // Declare variables
+  var input, filter, table, tr, tds, td, i, j, txtValue;
+  input = document.getElementById("alias-table-search");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("alias-table");
+  tr = table.querySelectorAll("tbody tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  Array.from(tr).forEach(row => {
+    if (Array.from(row.querySelectorAll(".value")).some(e => {
+      let value = e.textContent || e.innerText
+      return value.toUpperCase().indexOf(filter) > -1
+    })) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  })
+}
