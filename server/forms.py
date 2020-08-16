@@ -1,5 +1,8 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import User
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, forms
+from .models import User, Alias
+
+class NewAliasForm(forms.Form):
+    alias_name = forms.CharField(label='Alias Name', max_length=150, widget=forms.TextInput(attrs={'form':'new-alias-form'}))
 
 class CustomUserCreationForm(UserCreationForm):
 

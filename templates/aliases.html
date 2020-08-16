@@ -2,11 +2,36 @@
 
 {% block title %}Aliases{% endblock %}
 
+{% block head %}
+{{ block.super }}
+<link rel="stylesheet" href="/static/css/aliases.css">
+<link rel="stylesheet" href="/static/css/modal.css">
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="/static/js/aliases.js"></script>
+{% endblock %}
+
 {% block body %}
+
+{% include "components/new-alias-modal.html" %}
+
 <section>
-  <h1>Aliases</h1>
-  <p style="font-size: 18px; margin-top: 12px;">{{request.user.email}}</p>
-  <table>
+  <div class="row">
+    <div class="col">
+      <h1>Aliases</h1>
+      <p style="font-size: 18px; margin-top: 12px;">{{request.user.email}}</p>
+    </div>
+    <div class="pull-right">
+      <button data-toggle="modal" data-target="#create-alias-modal">
+        <clr-icon shape="plus-circle" size="27"></clr-icon>
+        <p style="margin-bottom: 0;">New</p>
+      </button>
+    </div>
+  </div>
+  
+  <table class="col">
     <thead>
       <tr>
         <th>Name</th>
@@ -18,26 +43,26 @@
     <tbody>
       <tr>
         <td>Superbase</td>
-        <td>r8fjpc4fbj3fwf8bbc6p@forwardmail.rocks</td>
+        <td class="email"><span>r8fjpc4fbj3fwf8bbc6p@forwardmail.rocks</span> <clr-icon shape="copy" size="20"></clr-icon></td>
         <td>Today</td>
         <td style="color: #AAAAAA">
-          <a href="#"><clr-icon shape="disconnect" size="27"></clr-icon></a>
-          <a href="#"><clr-icon shape="trash" size="25"></clr-icon></a>
-          <a href="#"><clr-icon shape="edit" size="25"></clr-icon></a>
+          <a href="#" title="Disconnect"><clr-icon shape="disconnect" size="27"></clr-icon></a>
+          <a href="#" title="Remove"><clr-icon shape="trash" size="25"></clr-icon></a>
+          <a href="#" title="Edit"><clr-icon shape="edit" size="25"></clr-icon></a>
         </td>
       </tr>
+      {% for alias in aliases %}
       <tr>
-        <td>Superbase</td>
-        <td>r8fjpc4fbj3fwf8bbc6p@forwardmail.rocks</td>
-        <td>Today</td>
-        <td></td>
+        <td>{{alias.name}}</td>
+        <td class="email"><span>{{alias.proxy_address}}</span> <clr-icon shape="copy" size="20"></clr-icon></td>
+        <td>{{alias.date}}</td>
+        <td style="color: #AAAAAA">
+          <a href="#" title="Disconnect"><clr-icon shape="disconnect" size="27"></clr-icon></a>
+          <a href="#" title="Remove"><clr-icon shape="trash" size="25"></clr-icon></a>
+          <a href="#" title="Edit"><clr-icon shape="edit" size="25"></clr-icon></a>
+        </td>
       </tr>
-      <tr>
-        <td>Superbase</td>
-        <td>r8fjpc4fbj3fwf8bbc6p@forwardmail.rocks</td>
-        <td>Today</td>
-        <td></td>
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </section>

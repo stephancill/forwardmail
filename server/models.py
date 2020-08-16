@@ -24,7 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Alias(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField("alias name", max_length=150)
-    proxy_address = models.EmailField("alias address")
+    proxy_address = models.EmailField("alias address", unique=True)
     date = models.DateTimeField(default=timezone.now)
     is_disconnected = models.BooleanField(default=False)
 

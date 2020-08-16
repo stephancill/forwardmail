@@ -1,0 +1,21 @@
+<div class="modal" tabindex="-1" role="dialog" id="create-alias-modal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">New Alias</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="new-alias-form" method="POST">{% csrf_token %}</form>
+      <div class="modal-body">
+        <!-- <label style="display: block; color: black; font-weight: 500;" for="alias-name">Alias Name</label>
+        <input  id="alias-name" type="text" style="width: 100%;" form="new-alias-form"> -->
+        {{ new_alias_form }}
+      </div>
+      <div class="modal-footer">
+        <button type="submit" form="new-alias-form" class="btn btn-primary">Create</button>
+      </div>
+    </div>
+  </div>
+</div>

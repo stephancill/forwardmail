@@ -1,3 +1,24 @@
 table {
     margin-top: 46px;
 }
+
+tr clr-icon {
+    visibility: hidden;
+}
+
+tr:hover a clr-icon {
+    visibility: visible;
+}
+
+.email:hover span{
+    color: black;
+}
+
+.email:hover clr-icon {
+    visibility: visible;
+}
+
+.email {
+    cursor: pointer;
+}
+

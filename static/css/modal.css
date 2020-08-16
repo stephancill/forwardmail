@@ -1,0 +1,26 @@
+.modal-content * {
+    border: none;
+}
+
+.modal-content {
+    padding: 19px;
+    background: #FDFDFD;
+    border-radius: 7px;
+    box-shadow: 0px 4px 25px 6px rgba(0, 0, 0, 0.25);
+}
+
+.modal .btn-primary {
+    background-color: #6FCBFF;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    color: white;
+    padding: 7px 18px 7px 18px;
+}
+
+.modal .btn-primary:hover {
+    box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.25);
+}
+
+.modal .close {
+    color: #BEBEBE;
+}

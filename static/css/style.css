@@ -9,6 +9,22 @@ h1 {
     line-height: 44px;
 }
 
+h3 {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 26px;
+}
+
+input {
+    background: #E0E0E0;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 20px;
+    padding-left: 11px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
 section {
     margin-top: 128px;
 }
@@ -16,6 +32,11 @@ section {
 nav {
     background: #FCFCFC;
     box-shadow: 0px 0px 25px 4px rgba(94, 94, 94, 0.25);
+}
+
+button {
+    border: none;
+    background: none;
 }
 
 table {
@@ -52,19 +73,19 @@ td {
 }
 
 tr:first-child td:first-child{
-    border-radius: 7px 0 0 0;
+    border-top-left-radius: 7px;
 }
 
 tr:first-child td:last-child{
-    border-radius: 0 7px 0 0;
+    border-top-right-radius: 7px;
 }
 
 tr:last-child td:first-child{
-    border-radius: 0 0 0 7px;
+    border-bottom-left-radius: 7px;
 }
 
 tr:last-child td:last-child{
-    border-radius: 0 0 7px;
+    border-bottom-right-radius: 7px;
 }
 
 tr:nth-child(2n) td {
@@ -81,7 +102,3 @@ tbody:before {
     line-height: 20px;
     text-indent: -99999px;
 }
-
-/* tbody {
-    box-shadow: 1px 5px 4px rgba(0, 0, 0, 0.06);
-} */
