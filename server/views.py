@@ -3,9 +3,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, loader, redirect
 from django.urls import reverse_lazy
 from django.views import generic, View
+
 from .forms import CustomUserCreationForm, NewAliasForm
 from .models import Alias
-import requests
 from .utilities import random_address, create_remote_alias
 
 class AliasPage(View):
