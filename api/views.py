@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 
+import json
+
 import rest_framework.authentication as authentication
 import rest_framework.permissions as permissions
 from rest_framework.response import Response
@@ -31,7 +33,9 @@ class ListAliases(APIView):
         return JsonResponse(serializer.data, safe=False)
 
     def post(self, request):
-        form = NewAliasForm(request.POST)
+        print(request.body)
+        data = request.POST or json.loads(request.body)
+        form = NewAliasForm(data)
         if form.is_valid():
             address = random_address()
             success = create_remote_alias(address, request.user.email)
