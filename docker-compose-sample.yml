@@ -1,0 +1,41 @@
+version: '3'
+services:
+  forwardmail:
+      build: .
+      env_file:
+      - .env 
+      command: ["./wait-for-it.sh", "db:5432", "--", "./docker-entrypoint.sh"]
+      container_name: forwardmail
+      image: forwardmail
+      restart: unless-stopped
+      ports:
+      - "8080:8080"
+      volumes:
+      - .:/app
+      depends_on:
+      - db
+      networks:
+      - frontend
+      - backend
+
+  db:
+      image: postgres
+      restart: always
+      container_name: forwardmail-db
+      environment:
+      - "POSTGRES_USER=${DATABASE_USER}"
+      - "POSTGRES_PASSWORD=${DATABASE_PASSWORD}"
+      - "POSTGRES_DB=${DATABASE_NAME}"
+      volumes:
+      - forwardmail_db:/var/lib/postgresql/data
+      networks:
+      - backend
+
+volumes:
+    forwardmail_db:
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge

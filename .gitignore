@@ -140,3 +140,5 @@ cython_debug/
 .env
 
 .vscode
+
+docker-compose.yml
