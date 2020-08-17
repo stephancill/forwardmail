@@ -41,7 +41,7 @@ const getExtensionFileType = (browser) => {
 };
 
 module.exports = {
-  devtool: false, // https://github.com/webpack/webpack/issues/1194#issuecomment-560382342
+  devtool: 'eval-source-map', // https://github.com/webpack/webpack/issues/1194#issuecomment-560382342
 
   mode: nodeEnv,
 
@@ -58,7 +58,8 @@ module.exports = {
     contentScript: './source/scripts/contentScript.js',
     popup: './source/scripts/popup.js',
     options: './source/scripts/options.js',
-    styles: ['./source/styles/popup.scss', './source/styles/options.scss'],
+    vendor: ['./../static/vendor/custom-elements.min.js', './../static/vendor/clr-icons.min.js'],
+    styles: ['./../static/vendor/clr-icons.min.css', './../static/css/style.css', './source/styles/popup.css'],
   },
 
   output: {
@@ -80,7 +81,7 @@ module.exports = {
       },
       {
         test: /.(js|jsx)$/,
-        include: [path.resolve(__dirname, 'source/scripts')],
+        include: [path.resolve(__dirname, 'source/scripts'), path.resolve(__dirname, './../static/vendor')],
         loader: 'babel-loader',
 
         options: {
@@ -97,7 +98,7 @@ module.exports = {
         },
       },
       {
-        test: /\.scss$/,
+        test: /\.css$/,
         use: [
           {
             loader: 'file-loader',

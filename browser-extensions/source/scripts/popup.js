@@ -1,19 +1,30 @@
 import 'emoji-log';
 import browser from 'webextension-polyfill';
 
-let endpoint = "http://127.0.0.1:8001/api/v1"
+let endpoint = "http://localhost:8080/api/v1"
+let aliases = []
+
+
+async function logout() {
+  await browser.storage.sync.remove("token")
+  document.dispatchEvent(new Event("DOMContentLoaded"))
+}
 
 async function APICall(method, options) {
   let token = (await browser.storage.sync.get("token")).token
   console.log((await browser.storage.sync.get("token")).token)
   let response = await fetch(`${endpoint}/${method}`, {
-    method: "POST",
+    method: "GET",
     headers: {
       'Content-Type': 'application/json',
       "Authorization": `Token ${token}`
     },
     ...options
   })
+  if (response.status == 401) {
+    await logout()
+    return
+  }
   return response.json()
 }
 
@@ -43,11 +54,13 @@ document.getElementById("sign-in").addEventListener('click', async () => {
   }
 })
 
-function openWebPage(url) {
-  return browser.tabs.create({url});
-}
-
 document.addEventListener('DOMContentLoaded', async () => {
+  Array.from(document.querySelectorAll("form")).forEach(form => {
+    form.addEventListener("submit", e => {
+      e.preventDefault()
+    })
+  })
+
   let token = await browser.storage.sync.get("token")
   if ("token" in token) {
     document.getElementById("auth").style.display = "none"
@@ -58,14 +71,57 @@ document.addEventListener('DOMContentLoaded', async () => {
     return
   }
 
+  let activeTab = (await browser.tabs.query({active: true}))[0]
+  console.log(activeTab)
+  let activeDomain = activeTab.title 
+  
+  try {
+    activeDomain = activeTab.url.split("://")[1].split("/")[0]
+  } catch (error) {
+    console.log("Using title")
+  }
+  
+  document.getElementById("new-alias-name").value = activeDomain
 
-  let aliases = await APICall("aliases", {
+  aliases = await APICall("aliases", {
     method: "GET"
   })
+
+  if (aliases.length == 0) {
+    document.getElementById("alias-search").style.display = "none"
+  }
+
   let listElement = document.getElementById("alias-container")
+  listElement.innerHTML = ""
   aliases.forEach(alias => {
-    listElement.innerHTML += `<li>${alias.name}-${alias.proxy_address}</li>`
-  });
+    let elementHTML = [`<li data-id="${alias.id}"><span class="alias-name">${alias.name}</span>`,
+    `<span class="alias-actions">`,
+    `<button class="alias-copy" title="Copy address"><clr-icon shape="copy" size="21"></clr-icon></button>`,
+    `<button class="alias-disconnect" title="${alias.is_disconnected ? 'Reconnect' : 'Disconnect'}"><clr-icon shape="${alias.is_disconnected ? 'connect' : 'disconnect'}" size="21"></clr-icon></button>`,
+    `<button class="alias-delete" title="Remove"><clr-icon shape="trash" size="21"></clr-icon></button>`,
+    `</span>`,
+    `<span class="alias-address">${alias.proxy_address}</span></li>`].join("")
+    listElement.innerHTML = elementHTML + listElement.innerHTML
+  })
+
+  Array.from(document.querySelectorAll("#alias-section li")).forEach(e => {
+    e.addEventListener("click", () => {
+      window.navigator.permissions.query({name: "clipboard-write"}).then(result => {
+        if (result.state == "granted" || result.state == "prompt") {
+          var span =  e.querySelector(".alias-address")
+          window.navigator.clipboard.writeText(span.textContent)
+          // TODO: Display "Copied tooltip"
+        }
+      });
+    })
+
+    let aliasID = e.dataset.id
+    Array.from(["copy", "disconnect", "delete"]).forEach(action => {
+      e.querySelector(`.alias-${action}`).addEventListener("click", () => {
+        aliasAction(action, aliasID)
+      })
+    })
+  })
 
   document.getElementById("new-alias-create").addEventListener("click", async () => {
     let nameElement = document.getElementById("new-alias-name")
@@ -81,7 +137,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   })
 
   document.getElementById("auth-logout").addEventListener("click", async () => {
-    await browser.storage.sync.remove("token")
-    document.dispatchEvent(new Event("DOMContentLoaded"))
+    await logout()
   })
-});
+})
+
+async function aliasAction(method, id) {
+  let alias = aliases.find(e => e.id == id)
+  if (method == "copy") {
+    window.navigator.permissions.query({name: "clipboard-write"}).then(result => {
+      if (result.state == "granted" || result.state == "prompt") {
+        window.navigator.clipboard.writeText(alias.proxy_address)
+        // TODO: Display "Copied tooltip"
+      }
+    });
+  } else if (method == "disconnect" || method == "delete") {
+    await APICall(`aliases/${id}/${method}`, {
+      method: "POST"
+    })
+    document.dispatchEvent(new Event("DOMContentLoaded"))
+  }
+}

@@ -52,19 +52,20 @@ class AliasActions(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, alias_id, method):
-        alias = Alias.objects.get(user_id=request.user.id, id=alias_id)
-        if not alias:
-            return JsonResponse("Requested alias could not be found", status=404)
-        
+        try:
+            alias = Alias.objects.get(user_id=request.user.id, id=alias_id)
+        except Alias.DoesNotExist:
+            return JsonResponse({"message": "Requested alias could not be found"}, status=404)
+            
         if not method in ["disconnect", "delete", "rename"]:
-            return JsonResponse("Invalid method", status=401)
+            return JsonResponse({"message": "Invalid method"}, status=401)
 
         if method == "disconnect":
             alias.is_disconnected = not alias.is_disconnected
             alias.save(update_fields=["is_disconnected"])
         elif method == "delete":
             alias.delete()
-            return JsonResponse(None, status=200)
+            return JsonResponse({}, status=200)
         elif method == "rename":
             name = request.POST.get("alias_name")
             if name:
