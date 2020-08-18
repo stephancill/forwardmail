@@ -89,6 +89,13 @@ button:focus{
     align-items: center;
 }
 
+#table-header #search-input {
+    height: 28px;
+    margin-top: 12px;
+    margin-left: 30px;
+    width: 230px;
+}
+
 #alias-section {
     width: 100%;
     background: #FDFDFD;

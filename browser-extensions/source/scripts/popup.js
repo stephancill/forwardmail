@@ -27,7 +27,8 @@ document.getElementById("logo").addEventListener('click', openForwardMailWebsite
 document.getElementById("sign-in").addEventListener('click', handleSignIn)
 document.getElementById("search-button").addEventListener('click', searchButtonPressed)
 document.getElementById("dismiss-search-button").addEventListener('click', searchButtonPressed)
-
+document.getElementById("search-input").addEventListener('input', onSearchInputChange)
+document.getElementById("search-form").addEventListener('reset', onSearchReset)
 
 async function handleSignIn() {
   let email = document.getElementById("auth-email").value
@@ -99,13 +100,13 @@ async function handlPageLoad() {
   let listElement = document.getElementById("alias-container")
   listElement.innerHTML = ""
   aliases.forEach(alias => {
-    let elementHTML = [`<li data-id="${alias.id}"><span class="alias-name">${alias.name}</span>`,
+    let elementHTML = [`<li data-id="${alias.id}"><span class="alias-name value">${alias.name}</span>`,
     `<span class="alias-actions">`,
     `<button class="alias-copy" title="Copy address"><clr-icon shape="copy" size="21"></clr-icon></button>`,
     `<button class="alias-disconnect" title="${alias.is_disconnected ? 'Reconnect' : 'Disconnect'}"><clr-icon shape="${alias.is_disconnected ? 'connect' : 'disconnect'}" size="21"></clr-icon></button>`,
     `<button class="alias-delete" title="Remove"><clr-icon shape="trash" size="21"></clr-icon></button>`,
     `</span>`,
-    `<span class="alias-address">${alias.proxy_address}</span></li>`].join("")
+    `<span class="alias-address value">${alias.proxy_address}</span></li>`].join("")
     listElement.innerHTML = elementHTML + listElement.innerHTML
   })
 
@@ -164,4 +165,28 @@ async function aliasAction(method, id) {
     })
     document.dispatchEvent(new Event("DOMContentLoaded"))
   }
+}
+
+
+function onSearchReset() {
+  document.getElementById("search-input").value = ""
+  onSearchInputChange()
+}
+
+function onSearchInputChange() {
+  let input = document.getElementById("search-input");
+  let filter = input.value.toUpperCase();
+  let table = document.getElementById("alias-container");
+  let rows = table.querySelectorAll("li");
+
+  Array.from(rows).forEach(row => {
+    if (Array.from(row.querySelectorAll(".value")).some(e => {
+      let value = e.textContent || e.innerText
+      return value.toUpperCase().indexOf(filter) > -1
+    })) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  })
 }
