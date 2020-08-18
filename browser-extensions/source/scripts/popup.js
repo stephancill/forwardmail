@@ -1,34 +1,11 @@
-import 'emoji-log';
 import browser from 'webextension-polyfill';
+import {APICall} from './utilities'
 
-let endpoint = "http://localhost:8080/api/v1"
 let aliases = []
 
+document.getElementById("sign-in").addEventListener('click', handleSignIn)
 
-async function logout() {
-  await browser.storage.sync.remove("token")
-  document.dispatchEvent(new Event("DOMContentLoaded"))
-}
-
-async function APICall(method, options) {
-  let token = (await browser.storage.sync.get("token")).token
-  console.log((await browser.storage.sync.get("token")).token)
-  let response = await fetch(`${endpoint}/${method}`, {
-    method: "GET",
-    headers: {
-      'Content-Type': 'application/json',
-      "Authorization": `Token ${token}`
-    },
-    ...options
-  })
-  if (response.status == 401) {
-    await logout()
-    return
-  }
-  return response.json()
-}
-
-document.getElementById("sign-in").addEventListener('click', async () => {
+async function handleSignIn() {
   let email = document.getElementById("auth-email").value
   let password = document.getElementById("auth-password").value
 
@@ -36,14 +13,13 @@ document.getElementById("sign-in").addEventListener('click', async () => {
     username: email,
     password
   }
-  let response = await fetch(`${endpoint}/token`, {
+  let json = await APICall("token", {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
   })
-  let json = await response.json()
   let token = json.token
 
   if (token) {
@@ -52,13 +28,18 @@ document.getElementById("sign-in").addEventListener('click', async () => {
   } else {
     // TODO: Show error
   }
-})
+}
 
-document.addEventListener('DOMContentLoaded', async () => {
+function preventDefault(e) {
+  e.preventDefault()
+}
+
+document.addEventListener('DOMContentLoaded', handlPageLoad)
+
+async function handlPageLoad() {
+  
   Array.from(document.querySelectorAll("form")).forEach(form => {
-    form.addEventListener("submit", e => {
-      e.preventDefault()
-    })
+    form.addEventListener("submit", preventDefault)
   })
 
   let token = await browser.storage.sync.get("token")
@@ -72,7 +53,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   let activeTab = (await browser.tabs.query({active: true}))[0]
-  console.log(activeTab)
   let activeDomain = activeTab.title 
   
   try {
@@ -87,9 +67,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     method: "GET"
   })
 
-  if (aliases.length == 0) {
-    document.getElementById("alias-search").style.display = "none"
-  }
+  // TODO: Add search
+  // if (aliases.length == 0) {
+  //   document.getElementById("alias-search").style.display = "none"
+  // }
 
   let listElement = document.getElementById("alias-container")
   listElement.innerHTML = ""
@@ -123,23 +104,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
   })
 
-  document.getElementById("new-alias-create").addEventListener("click", async () => {
-    let nameElement = document.getElementById("new-alias-name")
-    // TODO: Disable button when busy
-    if (nameElement.value.length > 0) {
-      await APICall("aliases", {
-        method: "POST",
-        body: JSON.stringify({alias_name: nameElement.value})
-      })
-      nameElement.value = ""
-      document.dispatchEvent(new Event("DOMContentLoaded"))
-    }
-  })
+  
+  document.getElementById("new-alias-create").addEventListener("click", handleCreateAlias)
 
-  document.getElementById("auth-logout").addEventListener("click", async () => {
-    await logout()
+  document.getElementById("settings-button").addEventListener("click", async () => {
+    browser.runtime.openOptionsPage()
   })
-})
+}
+
+async function handleCreateAlias() {
+  let nameElement = document.getElementById("new-alias-name")
+  // TODO: Disable button when busy
+  if (nameElement.value.length > 0) {
+    await APICall("aliases", {
+      method: "POST",
+      body: JSON.stringify({alias_name: nameElement.value})
+    })
+    nameElement.value = ""
+    document.dispatchEvent(new Event("DOMContentLoaded"))
+  }
+}
 
 async function aliasAction(method, id) {
   let alias = aliases.find(e => e.id == id)

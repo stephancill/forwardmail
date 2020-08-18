@@ -59,7 +59,7 @@ module.exports = {
     popup: './source/scripts/popup.js',
     options: './source/scripts/options.js',
     vendor: ['./../static/vendor/custom-elements.min.js', './../static/vendor/clr-icons.min.js'],
-    styles: ['./../static/vendor/clr-icons.min.css', './../static/css/style.css', './source/styles/popup.css'],
+    styles: ['./../static/vendor/clr-icons.min.css', './../static/css/style.css', './source/styles/popup.css', './source/styles/options.css'],
   },
 
   output: {
