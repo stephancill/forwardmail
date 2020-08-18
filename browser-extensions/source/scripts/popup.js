@@ -3,7 +3,31 @@ import {APICall} from './utilities'
 
 let aliases = []
 
+function openWebpage(url) {
+  browser.tabs.create({url})
+}
+
+function openForwardMailWebsite() {
+  // TODO: Get this from environment variable
+  openWebpage("http://localhost:8080")
+}
+
+function searchButtonPressed() {
+  let userInfo = document.getElementById("user-info")
+  let searchInput = document.getElementById("search-input")
+  let searchButton = document.getElementById("search-button")
+  let dismissSearchButton = document.getElementById("dismiss-search-button")
+  
+  Array.from([userInfo, searchInput, searchButton, dismissSearchButton]).forEach(e => {
+    e.style.display = e.style.display == "none" ? "inline" : "none";
+  })
+}
+
+document.getElementById("logo").addEventListener('click', openForwardMailWebsite)
 document.getElementById("sign-in").addEventListener('click', handleSignIn)
+document.getElementById("search-button").addEventListener('click', searchButtonPressed)
+document.getElementById("dismiss-search-button").addEventListener('click', searchButtonPressed)
+
 
 async function handleSignIn() {
   let email = document.getElementById("auth-email").value

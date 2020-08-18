@@ -13,6 +13,16 @@
 
 <body>
 
+  <section>
+    <div id="header">
+      <button id="logo">
+        <!-- TODO: Get this from server favicons -->
+        <img src="assets/icons/favicon-32.png" alt="" srcset="">
+      </button>
+      <span><button id="settings-button"><clr-icon shape="settings" size="21"></clr-icon></button></span>
+    </div>
+  </section>
+
   <section id="auth">
     <form>
       <input id="auth-email" type="text" placeholder="Email">
@@ -22,23 +32,25 @@
   </section>
 
   <section id="popup">
-    <div id="header">
-      <span style="font-size: 16px"><img src="assets/icons/favicon-32.png" alt="" srcset=""></span>
-      <span><button id="settings-button"><clr-icon shape="settings" size="21"></clr-icon></button></span>
-    </div>
+    
     <form id="new-alias-form">
       <input id="new-alias-name" type="text">
       <button type="submit" id="new-alias-create"><span>+</span></button>
     </form>
-    <div id="user-info">
-      <span style="margin-left: 30px;">
+    <div id="table-header">
+      <span id="user-info" style="margin-left: 30px;">
         <h5 style="margin-bottom: 4px;">Aliases</h5>
         <p id="user-email" style="margin: 0px; font-size: 12px;">a@a.com</p>
       </span>
-      <span style="margin-right: 30px; margin-top: 10px;"><button id="search-button"><clr-icon shape="search" size="21"></clr-icon></button></span>
+      <span>
+        <input style="display: none;" type="text" id="search-input" placeholder="Search...">
+      </span>
+      <span style="margin-right: 30px; margin-top: 10px;">
+        <button id="search-button"><clr-icon shape="search" size="21"></clr-icon></button>
+        <button id="dismiss-search-button" style="display: none;"><clr-icon shape="close" size="21"></clr-icon></button>
+      </span>
     </div>
     <div id="alias-section">
-      <!-- <input id="alias-search" type="search" placeholder="Search..."> -->
       <ul id="alias-container"></ul>
     </div>
   </section>

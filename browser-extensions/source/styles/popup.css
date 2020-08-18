@@ -13,6 +13,32 @@ button:focus{
     outline: none;   
 }
 
+#auth form {
+    padding: 15px;
+    display:flex;
+    flex-direction:column
+}
+
+#auth input {
+    height: 28px;
+    width: auto !important;
+    margin-top: 11px;
+}
+
+#auth button {
+    align-self: flex-end;
+    text-align: center;
+    background-color: #6FCBFF;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    color: #FDFDFD;
+    height: 28px;
+    padding-left: 11px;
+    padding-right: 11px;
+    margin-top: 11px;
+    font-size: 16px;
+}
+
 #header {
     width: 100%;
     display: -webkit-flex;
@@ -52,7 +78,7 @@ button:focus{
     vertical-align: top;
 }
 
-#user-info {
+#table-header {
     padding-bottom: 15px;
     width: 100%;
     height: 38px;
