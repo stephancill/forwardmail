@@ -32,6 +32,12 @@ h5 {
 
 a {
     text-decoration: none !important;
+    color: var(--primary-dark);
+}
+
+.link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline !important;
 }
 
 input {

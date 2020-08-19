@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{ block.super }}
+<link rel="stylesheet" href="/static/css/auth.css">
+{% endblock %}
+
+{% block body %}
+<section>
+    <div class="form-container ml-auto mr-auto">
+        <h3 class="mb-3">{% block form-title %}Form{% endblock %}</h3>
+        {% if form.errors %}
+        <div class="form-errors">
+            <p>Your username and password didn't match. Please try again.</p>
+        </div>
+        {% endif %}
+        {% block form %}{% endblock %}
+    </div>
+</section>
+
+{% endblock %}
+
