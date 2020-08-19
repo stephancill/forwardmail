@@ -9,6 +9,7 @@ const ExtensionReloader = require('webpack-extension-reloader');
 const WextManifestWebpackPlugin = require('wext-manifest-webpack-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const targetBrowser = process.env.TARGET_BROWSER;
@@ -40,6 +41,10 @@ const getExtensionFileType = (browser) => {
   return 'zip';
 };
 
+function getStatic(dir) {
+  return path.resolve(__dirname, '..', 'static', dir)
+}
+
 module.exports = {
   devtool: 'eval-source-map', // https://github.com/webpack/webpack/issues/1194#issuecomment-560382342
 
@@ -58,8 +63,11 @@ module.exports = {
     contentScript: './source/scripts/contentScript.js',
     popup: './source/scripts/popup.js',
     options: './source/scripts/options.js',
-    vendor: ['./../static/vendor/custom-elements.min.js', './../static/vendor/clr-icons.min.js'],
-    styles: ['./../static/vendor/clr-icons.min.css', './../static/css/style.css', './source/styles/popup.css', './source/styles/options.css'],
+    vendor: [getStatic('vendor/custom-elements.min.js'), getStatic('vendor/clr-icons.min.js')],
+    styles: [
+      getStatic('vendor/clr-icons.min.css'), getStatic('css/style.css'), getStatic('css/inter-font.css'),
+      './source/styles/popup.css', './source/styles/options.css',
+    ]
   },
 
   output: {
@@ -163,8 +171,8 @@ module.exports = {
       filename: 'popup.html',
     }),
     new CopyWebpackPlugin([
-      // {from: 'source/assets', to: 'assets'},
-      {from: path.resolve('..', 'static', 'favicons', 'favicon-?(16|32|48|128).png'), to: 'assets/icons', flatten: true}
+      {from: getStatic('favicons') + '/favicon-?(16|32|48|128).png', to: 'static/icons', flatten: true},
+      {from: getStatic('fonts'), to: 'static/fonts', flatten: true},
     ]),
     extensionReloaderPlugin,
   ],

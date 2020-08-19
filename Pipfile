@@ -10,6 +10,7 @@ django = "*"
 psycopg2 = "*"
 requests = "*"
 djangorestframework = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.6"

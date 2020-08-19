@@ -8,6 +8,7 @@
 body {
     background: linear-gradient(135.77deg, #F9D29D 6.97%, #FFD8CB 97%);
     font-family: Inter;
+    min-height: 100vh;
 }
 
 h1 {

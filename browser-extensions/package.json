@@ -29,6 +29,7 @@
     "@babel/runtime": "^7.10.2",
     "advanced-css-reset": "^1.1.1",
     "emoji-log": "^1.0.2",
+    "favicons-webpack-plugin": "^4.2.0",
     "webext-base-css": "^1.1.0",
     "webextension-polyfill": "^0.6.0"
   },
