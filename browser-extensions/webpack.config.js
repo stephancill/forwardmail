@@ -162,7 +162,10 @@ module.exports = {
       chunks: ['popup'],
       filename: 'popup.html',
     }),
-    new CopyWebpackPlugin([{from: 'source/assets', to: 'assets'}]),
+    new CopyWebpackPlugin([
+      // {from: 'source/assets', to: 'assets'},
+      {from: path.resolve('..', 'static', 'favicons', 'favicon-?(16|32|48|128).png'), to: 'assets/icons', flatten: true}
+    ]),
     extensionReloaderPlugin,
   ],
 
