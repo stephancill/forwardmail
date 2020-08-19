@@ -6,6 +6,14 @@ tr:hover a clr-icon {
     visibility: visible;
 }
 
+tr clr-icon {
+    color: #AAAAAA;
+}
+
+tr clr-icon:hover {
+    color: var(--secondary-dark);
+}
+
 .email:hover span{
     color: black;
 }

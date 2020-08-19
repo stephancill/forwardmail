@@ -1,6 +1,7 @@
 
 :root {
     --primary-dark: #F49870; 
+    --primary-dark-highlight: #EE946D;
     --secondary-dark: #292929
 }
 
@@ -13,7 +14,7 @@ h1 {
     font-weight: bold;
     font-size: 36px;
     line-height: 44px;
-    color: #2980B9;
+    color: black;
 }
 
 h3 {
@@ -86,7 +87,7 @@ th {
     font-weight: 600;
     font-size: 16px;
     line-height: 19px;
-    color: #ADADAD;
+    color: #595959;
     height: 49px;
 }
 

@@ -21,23 +21,25 @@
 <section>
   <div class="row">
     <div class="col">
-      <h1>Aliases</h1>
-      <p style="font-size: 18px; margin-top: 12px;">{{request.user.email}}</p>
+      <h1 style="margin-bottom: 0 !important;">Aliases</h1>
+      <p style="font-size: 18px; margin-top: 4px;">{{request.user.email}}</p>
     </div>
     <div class="pull-right" style="padding: 15px;">
+      <!-- <input id="alias-table-search" form="search-form" type="search" placeholder="Search..." oninput="onSearchInputChange()"> -->
+      <button>
+        <clr-icon shape="search" size="28"></clr-icon>
+        <p style="margin-bottom: 0;">Search</p>
+      </button>
       <button data-toggle="modal" data-target="#create-alias-modal">
-        <clr-icon shape="plus-circle" size="40"></clr-icon>
+        <clr-icon shape="add" size="31"></clr-icon>
         <p style="margin-bottom: 0;">New</p>
       </button>
     </div>
   </div>
   
-  <div class="row" style="margin-top: 46px;">
+  <div class="row" style="margin-top: 25px;">
     {% if aliases %}
     <div class="col">
-      <div class="text-right" style="margin-bottom: 15px;">
-        <input id="alias-table-search" form="search-form" type="search" placeholder="Search..." oninput="onSearchInputChange()">
-      </div>
       <table id="alias-table" style="width: 100%;">
         <thead>
           <tr>
