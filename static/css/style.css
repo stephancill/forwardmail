@@ -1,5 +1,11 @@
+
+:root {
+    --primary-dark: #F49870; 
+    --secondary-dark: #292929
+}
+
 body {
-    background-color: #C5EAFF !important;
+    background: linear-gradient(135.77deg, #F9D29D 6.97%, #FFD8CB 97%);
     font-family: Inter;
 }
 
@@ -7,6 +13,7 @@ h1 {
     font-weight: bold;
     font-size: 36px;
     line-height: 44px;
+    color: #2980B9;
 }
 
 h3 {
@@ -32,6 +39,7 @@ input {
     padding-left: 11px;
     outline: none;
     border: none;
+    height: 32px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -61,6 +69,10 @@ button {
     border: none;
     background: none;
     cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary-dark);
 }
 
 table {
