@@ -35,10 +35,10 @@
     
     <form id="new-alias-form">
       <input id="new-alias-name" type="text">
-      <button type="submit" id="new-alias-create"><span>+</span></button>
+      <button type="submit" id="new-alias-create" class="btn-primary"><span>+</span></button>
     </form>
     <div id="table-header">
-      <span id="user-info" style="margin-left: 30px;">
+      <span id="user-info" style="">
         <h5 style="margin-bottom: 4px;">Aliases</h5>
         <p id="user-email" style="margin: 0px; font-size: 12px;">a@a.com</p>
       </span>
@@ -46,13 +46,13 @@
       <span>
         <input form="search-form" style="display: none;" type="text" id="search-input" placeholder="Search...">
       </span>
-      <span style="margin-right: 30px; margin-top: 10px;">
+      <span style="margin-top: 10px; margin-right: 40px;">
         <button id="search-button"><clr-icon shape="search" size="21"></clr-icon></button>
         <button type="reset" form="search-form" id="dismiss-search-button" style="display: none;"><clr-icon shape="close" size="21"></clr-icon></button>
       </span>
     </div>
     <div id="alias-section">
-      <ul id="alias-container"></ul>
+      <ul id="alias-container" class="drop-shadow-up"></ul>
     </div>
   </section>
 

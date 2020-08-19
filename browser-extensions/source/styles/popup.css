@@ -3,6 +3,7 @@ body {
     max-height: 400px;
     margin: 0 !important;
     overflow-x: hidden;
+    margin-bottom: -11px;
 }
 
 section {
@@ -28,7 +29,6 @@ button:focus{
 #auth button {
     align-self: flex-end;
     text-align: center;
-    background-color: #6FCBFF;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
     color: #FDFDFD;
@@ -60,18 +60,16 @@ button:focus{
 
 #new-alias-form input {
     width: auto;
-    height: 28px !important;
     margin-right: 11px;
-    width: 78%;
+    width: 76%;
 }
 
 #new-alias-form button {
     font-weight: 500;
     font-size: 24px;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     text-align: center;
-    background-color: #6FCBFF;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
     color: #FDFDFD;
@@ -80,27 +78,35 @@ button:focus{
 
 #table-header {
     padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
     width: 100%;
-    height: 38px;
+    height: 73px;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: -12px;
 }
 
 #table-header #search-input {
-    height: 28px;
     margin-top: 12px;
-    margin-left: 30px;
     width: 230px;
+}
+
+#table-header.drop-shadow-up {
+    background: #FDFDFD;
+}
+
+.drop-shadow-up {
+    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.11);
 }
 
 #alias-section {
     width: 100%;
     background: #FDFDFD;
     height: auto;
-    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.11);
 }
 
 #alias-search {
@@ -136,7 +142,7 @@ button:focus{
 }
 
 #alias-section li .alias-actions clr-icon {
-    color: #6ECBFF;
+    color: var(--secondary-dark);
 }
 
 #alias-section li:hover .alias-address {

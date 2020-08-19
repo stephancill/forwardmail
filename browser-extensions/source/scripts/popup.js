@@ -17,10 +17,21 @@ function searchButtonPressed() {
   let searchInput = document.getElementById("search-input")
   let searchButton = document.getElementById("search-button")
   let dismissSearchButton = document.getElementById("dismiss-search-button")
-  
+
+  let aliasContainer = document.getElementById("alias-container")
+  let tableHeader = document.getElementById("table-header")
+
   Array.from([userInfo, searchInput, searchButton, dismissSearchButton]).forEach(e => {
     e.style.display = e.style.display == "none" ? "inline" : "none";
   })
+
+  if (tableHeader.classList.contains("drop-shadow-up")) {
+    tableHeader.classList.remove("drop-shadow-up")
+    aliasContainer.classList.add("drop-shadow-up")
+  } else {
+    aliasContainer.classList.remove("drop-shadow-up")
+    tableHeader.classList.add("drop-shadow-up")
+  }
 }
 
 document.getElementById("logo").addEventListener('click', openForwardMailWebsite)
@@ -78,6 +89,7 @@ async function handlPageLoad() {
   }
 
   let activeTab = (await browser.tabs.query({active: true}))[0]
+  let activeHost = ""
   let activeDomain = activeTab.title 
   
   try {
@@ -92,10 +104,9 @@ async function handlPageLoad() {
     method: "GET"
   })
 
-  // TODO: Add search
-  // if (aliases.length == 0) {
-  //   document.getElementById("alias-search").style.display = "none"
-  // }
+  aliases.sort((a, _) => {
+    return Math.max(activeDomain.toLowerCase().indexOf(a.name.toLowerCase()), a.name.toLowerCase().indexOf(activeDomain.toLowerCase()))
+  })
 
   let listElement = document.getElementById("alias-container")
   listElement.innerHTML = ""
@@ -160,6 +171,11 @@ async function aliasAction(method, id) {
       }
     });
   } else if (method == "disconnect" || method == "delete") {
+    if (method == "delete") {
+      if (!confirm("Are you sure you would like to permanently delete this alias?")) {
+        return
+      }
+    }
     await APICall(`aliases/${id}/${method}`, {
       method: "POST"
     })
