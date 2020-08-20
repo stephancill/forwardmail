@@ -17,10 +17,8 @@ class AliasPage(View):
             if success:
                 alias = Alias.objects.create(user_id=request.user.id, name=form.cleaned_data.get("alias_name"), proxy_address=address)
                 alias.save()
-            # TODO: Check for validation issues
             return redirect("home")
 
-        # TODO: Show form errors
         return redirect("home")
 
     def get(self, request):
@@ -29,7 +27,7 @@ class AliasPage(View):
             "aliases": aliases,
             "new_alias_form": NewAliasForm()
         }
-        template = loader.get_template('aliases.html')
+        template = loader.get_template("aliases.html")
         return HttpResponse(template.render(context, request))
 
 class AliasAction(View):
