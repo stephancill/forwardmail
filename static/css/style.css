@@ -36,6 +36,10 @@ a {
     color: var(--primary-dark);
 }
 
+p {
+    color: black;
+}
+
 .nav-link {
     padding-left: 37px !important;
     /* color: black !important; */
@@ -47,6 +51,10 @@ a {
 
 .nav-link.active {
     font-weight: bold;
+}
+
+.navbar-toggler {
+    border: none;
 }
 
 .link:hover {

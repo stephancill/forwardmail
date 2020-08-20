@@ -39,7 +39,7 @@ function prepareEditModal({formURL, value}) {
 function onSearchInputChange() {
   // Declare variables
   var input, filter, table, tr, tds, td, i, j, txtValue;
-  input = document.getElementById("alias-table-search");
+  input = document.getElementById("search-input");
   filter = input.value.toUpperCase();
   table = document.getElementById("alias-table");
   tr = table.querySelectorAll("tbody tr");
@@ -55,4 +55,11 @@ function onSearchInputChange() {
       row.style.display = "none";
     }
   })
+}
+
+function toggleSearch() {
+  $("#search-button").toggle()
+  $("#search").toggle()
+  $("#search-input").focus()
+  $("#search-reset").toggle()
 }

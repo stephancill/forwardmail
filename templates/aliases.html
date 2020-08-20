@@ -26,13 +26,18 @@
       <h1 style="margin-bottom: 0 !important;">Aliases</h1>
       <p style="font-size: 18px; margin-top: 4px;">{{request.user.email}}</p>
     </div>
-    <div class="pull-right" style="padding: 15px;">
-      <!-- <input id="alias-table-search" form="search-form" type="search" placeholder="Search..." oninput="onSearchInputChange()"> -->
-      <button>
+    <div class="pull-right " style="padding: 15px;">
+      <span id="search" style="display: none; padding-top: 40px;" class="align-top">
+        <form id="search-form" onsubmit="return false"></form>
+        <input id="search-input" class="align-middle" form="search-form" type="search" placeholder="Search..." oninput="onSearchInputChange()">
+        <button type="reset" id="reset-search" form="search-form" onclick="toggleSearch()"><clr-icon shape="close" size="20"></clr-icon></button>
+      </span>
+      
+      <button id="search-button" class="align-bottom" onclick="toggleSearch()">
         <clr-icon shape="search" size="28"></clr-icon>
         <p style="margin-bottom: 0;">Search</p>
       </button>
-      <button data-toggle="modal" data-target="#create-alias-modal">
+      <button class="align-bottom" data-toggle="modal" data-target="#create-alias-modal">
         <clr-icon shape="add" size="31"></clr-icon>
         <p style="margin-bottom: 0;">New</p>
       </button>
@@ -75,7 +80,7 @@
                   <clr-icon shape="{% if alias.is_disconnected %}connect{% else %}disconnect{% endif %}" size="27"></clr-icon>
                 </a>
                 <a href="{% url 'alias_action' alias.id 'delete' %}" title="Remove" 
-                onclick="return confirm('Are you sure you would like to delete the alias \'{{alias.name}}\'')">
+                onclick="return confirm('Are you sure you would like to delete the alias \'{{alias.name}}\'?')">
                   <clr-icon shape="trash" size="25"></clr-icon>
                 </a>
                 {% url 'alias_action' alias.id 'update' as form_url %}
