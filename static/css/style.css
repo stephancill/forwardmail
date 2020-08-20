@@ -6,9 +6,10 @@
 }
 
 body {
-    background: linear-gradient(135.77deg, #F9D29D 6.97%, #FFD8CB 97%);
+    background: linear-gradient(135.77deg, #FFB084 6.97%, #A8B4FF 97%);
     font-family: Inter;
     min-height: 100vh;
+    padding-bottom: 100px;
 }
 
 h1 {
@@ -33,6 +34,19 @@ h5 {
 a {
     text-decoration: none !important;
     color: var(--primary-dark);
+}
+
+.nav-link {
+    padding-left: 37px !important;
+    /* color: black !important; */
+}
+
+.nav-link:hover {
+    color: black !important;
+}
+
+.nav-link.active {
+    font-weight: bold;
 }
 
 .link:hover {
@@ -150,4 +164,12 @@ form label, .form label {
 }
 form input, .form input {
     width: 100%;
+}
+
+
+@media only screen 
+and (max-width : 990px) {
+  .sm-none {
+      display: none;
+  }
 }

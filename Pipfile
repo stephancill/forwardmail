@@ -11,6 +11,7 @@ psycopg2 = "*"
 requests = "*"
 djangorestframework = "*"
 pillow = "*"
+django-activeurl = "*"
 
 [requires]
 python_version = "3.6"

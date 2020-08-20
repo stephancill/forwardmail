@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'server.apps.ServerConfig',
     'api.apps.APIConfig',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'django_activeurl'
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,10 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+)
 
 WSGI_APPLICATION = 'forwardmail.wsgi.application'
 

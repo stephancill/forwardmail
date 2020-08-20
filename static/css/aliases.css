@@ -1,3 +1,7 @@
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
+
 tr .actions clr-icon {
     visibility: hidden;
 }

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load filter_utilities %}
+
 {% block title %}Aliases{% endblock %}
 
 {% block head %}
@@ -39,14 +41,14 @@
   
   <div class="row" style="margin-top: 25px;">
     {% if aliases %}
-    <div class="col">
+    <div class="col scrollbar-hidden" style="overflow-x: scroll; scrollbar-width: none;">
       <table id="alias-table" style="width: 100%;">
         <thead>
           <tr>
             <th></th>
             <th>Name</th>
             <th>Address</th>
-            <th>When</th>
+            <th class="sm-none">When</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -66,9 +68,9 @@
                 <span class="value">{{alias.proxy_address}}</span> <span class="actions"><clr-icon shape="copy" size="20"></clr-icon></span> 
               </span>
             </td>
-            <td><span title="{{alias.date}}">{{alias.date|timesince}} ago</span> </td>
+            <td class="sm-none"><span title="{{alias.date}}">{{alias.date|timesince|upto:","}} ago</span> </td>
             <td style="color: #AAAAAA">
-              <div class="actions">
+              <div class="actions" style="min-width: 100px;">
                 <a href="{% url 'alias_action' alias.id 'disconnect' %}" title="Disconnect">
                   <clr-icon shape="{% if alias.is_disconnected %}connect{% else %}disconnect{% endif %}" size="27"></clr-icon>
                 </a>
