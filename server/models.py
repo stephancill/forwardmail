@@ -30,3 +30,6 @@ class Alias(models.Model):
 
     def __str__(self):
         return "{} to {}".format(self.proxy_address, self.user.email)
+
+    class Meta:
+        ordering = ["-date", "name"]
