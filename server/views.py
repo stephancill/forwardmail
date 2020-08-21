@@ -1,13 +1,21 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView
+from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.shortcuts import render, loader, redirect
 from django.urls import reverse_lazy
 from django.views import generic, View
+from django_registration.backends.activation.views import RegistrationView
 
-from .forms import CustomUserCreationForm, NewAliasForm
+import config
+import logging
+
+from .forms import CustomUserCreationForm, NewAliasForm, UserRegistrationForm, UserLoginForm
 from .models import Alias
 from .mixins import UserVerifiedMixin
 from .utilities import random_address, create_remote_alias
+
+logger = logging.getLogger(__name__)
 
 class AliasPage(UserVerifiedMixin, View):
 
@@ -30,7 +38,7 @@ class AliasPage(UserVerifiedMixin, View):
             "new_alias_form": NewAliasForm()
         }
         template = loader.get_template("aliases.html")
-        return HttpResponse(template.render(context, request))
+        return render(request, "aliases.html", context=context)
 
 class AliasAction(UserVerifiedMixin, View):
     def get(self, request, alias_id, method):
@@ -60,13 +68,38 @@ class AliasAction(UserVerifiedMixin, View):
 
 class SettingsPage(LoginRequiredMixin, View):
     def get(self, request):
-        context = {
-            
-        }
-        template = loader.get_template("settings.html")
-        return HttpResponse(template.render(context, request))
+        context = {}
+        return render(request, "settings.html", context=context)
 
-class Register(generic.CreateView):
-    form_class = CustomUserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'registration/register.html'
+    def post(self, request):
+        if "resend_activation" in request.path and not request.user.is_active:
+            ResendActivationView.as_view()(request)
+            return render(request, "django_registration/registration_complete.html")
+
+        return redirect("settings")
+
+class CustomLoginView(LoginView):
+    authentication_form = UserLoginForm
+
+
+class CustomRegistrationView(RegistrationView):
+    form = UserRegistrationForm
+
+    def send_activation_email(self, user):
+        activation_key = self.get_activation_key(user)    
+        activation_url = "{endpoint}{url}".format(endpoint=config.SERVER_ENDPOINT, url=reverse_lazy("django_registration_activate", args=[activation_key]))
+        message = EmailMessage(
+            subject="Activate your ForwardMail account.",
+            to=[user.email]
+        )
+        message.template_id = "account-activation"
+        message.merge_global_data = {
+            "activation_url": activation_url,
+            "user_name": user.first_name
+        }
+        logger.info(message.merge_global_data)
+        message.send()
+
+class ResendActivationView(CustomRegistrationView):
+    def post(self, request, *args, **kwargs):
+        self.send_activation_email(request.user)

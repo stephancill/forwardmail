@@ -11,6 +11,7 @@ from .utilities import remove_remote_alias, create_remote_alias
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+        
 
 @receiver(signals.post_save, sender=Alias)
 def update_remote(sender, instance, update_fields, created, **kwargs):

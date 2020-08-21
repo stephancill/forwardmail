@@ -1,0 +1,5 @@
+{% extends "message-base.html" %}
+
+{% block title %}Activation{%endblock%}
+{% block message_title %}Activation Failed{%endblock%}
+{% block message_body %}We were not able to activate your account. {{activation_error.message}} ({{activation_error.code}}){%endblock%}

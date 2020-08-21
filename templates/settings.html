@@ -2,25 +2,37 @@
 
 {% block title %}Settings{% endblock %}
 
+{% block head %}
+{{block.super}}
+<link rel="stylesheet" href="/static/css/settings.css">
+{% endblock %}
+
 {% block body %}
 <section>
     <div class="card">
         <h1 style="margin-bottom: 25px;">Settings</h1>
-        <div>
+        <div class="section">
             <h3>Account</h3>
-            {% if not request.user.is_verified %}
-            <div>Email not verified. <a href="">Click here</a> to resend verification email.</div>
-            {% endif %}
-            <div>
-                <a href="{% url 'logout' %}">Logout</a>
-            </div>
-            <div>
-                {% csrf_token %}
-                <form action="{% url 'logout' %}" onsubmit="return confirm('Are you sure you would like to delete your account? All aliases will be deleted forever and cannot be recovered.')">
-                <a><button class="text-danger" type="submit" style="padding-left: 0;">Delete account</button></a>
+            {% if not request.user.is_active %}
+            <div class="subsection">
+                <form action="{% url 'resend_activation' %}" method="POST">
+                    {% csrf_token %}
+                    <div>Account not activated. Check your inbox.</div>
+                    <button class="cta-button" type="submit">Resend Activation</button>
                 </form>
             </div>
-            <!-- <form action="{% url 'logout' %}"></form> -->
+            
+            
+            {% endif %}
+            <div class="subsection">
+                <a href="{% url 'logout' %}">Logout</a>
+            </div>
+            <div class="subsection">
+                <form action="{% url 'logout' %}" onsubmit="return confirm('Are you sure you would like to delete your account? All aliases will be deleted forever and cannot be recovered.')">
+                    {% csrf_token %}
+                    <a><button class="text-danger" type="submit" style="padding-left: 0;">Delete account</button></a>
+                </form>
+            </div>
             
         </div>
     </div>

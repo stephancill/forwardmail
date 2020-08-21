@@ -1,4 +1,4 @@
-{% extends "registration/auth-base.html" %}
+{% extends "auth-base.html" %}
 
 {% block title %}Login{% endblock %}
 
@@ -15,13 +15,13 @@
         <span>{{form.password.label_tag}}</span>
         {{form.password}}
     </div>
-    <button type="submit">Login</button>
+    <button class="cta-button" type="submit">Login</button>
     <input type="hidden" name="next" value="{{ next }}">
     <input type="hidden" value="login">
 </form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
-<p class="text-center"><a class="link" href="{% url 'register' %}">Need an account?</a></p>
+<p class="text-center"><a class="link" href="{% url 'django_registration_register' %}">Need an account?</a></p>
 <p class="text-center"><a class="link" href="{% url 'password_reset' %}">Lost password?</a></p>
 
 {% endblock %}

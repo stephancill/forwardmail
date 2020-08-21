@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section>
+    <h1>{% block message_title %}{% endblock %}</h1>
+    <div>{% block message_body %}{% endblock %}</div>
+</section>
+{% block footer %}{% endblock %}
+{% endblock%}
+

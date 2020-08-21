@@ -7,4 +7,4 @@ class UserVerifiedMixin(UserPassesTestMixin, LoginRequiredMixin):
         return redirect("settings")
 
     def test_func(self):
-        return self.request.user.is_authenticated and self.request.user.is_verified
+        return self.request.user.is_authenticated and self.request.user.is_active

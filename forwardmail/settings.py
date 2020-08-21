@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'api.apps.APIConfig',
     'rest_framework',
     'rest_framework.authtoken',
-    'django_activeurl'
+    'django_activeurl',
+    'django_registration',
+    'anymail'
 ]
 
 MIDDLEWARE = [
@@ -100,18 +102,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 
@@ -139,12 +141,15 @@ STATICFILES_DIRS = [
     '/var/www/static/',
 ]
 
+
 # Auth
 
 AUTH_USER_MODEL = 'server.User'
 LOGIN_URL = "/accounts/login"
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+ACCOUNT_ACTIVATION_DAYS = 7
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
 
 
 # REST Framework
@@ -156,3 +161,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication'
     ]
 }
+
+# Email
+
+ANYMAIL = {
+    "MAILGUN_API_KEY": config.MAILGUN_API_KEY,
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+DEFAULT_FROM_EMAIL = "stephan@mail.forwardmail.rocks" 
+SERVER_EMAIL = "stephan@mail.forwardmail.rocks"
+
