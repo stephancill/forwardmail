@@ -75,7 +75,9 @@ class SettingsPage(LoginRequiredMixin, View):
         if "resend_activation" in request.path and not request.user.is_active:
             ResendActivationView.as_view()(request)
             return render(request, "django_registration/registration_complete.html")
-
+        if "delete_account" in request.path:
+            request.user.delete()
+        
         return redirect("settings")
 
 class CustomLoginView(LoginView):

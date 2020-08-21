@@ -28,7 +28,7 @@
                 <a href="{% url 'logout' %}">Logout</a>
             </div>
             <div class="subsection">
-                <form action="{% url 'logout' %}" onsubmit="return confirm('Are you sure you would like to delete your account? All aliases will be deleted forever and cannot be recovered.')">
+                <form method="POST" action="{% url 'delete_account' %}" onsubmit="return confirm('Are you sure you would like to delete your account? All aliases will be deleted forever and cannot be recovered.')">
                     {% csrf_token %}
                     <a><button class="text-danger" type="submit" style="padding-left: 0;">Delete account</button></a>
                 </form>
