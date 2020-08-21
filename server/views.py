@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render, loader, redirect
 from django.urls import reverse_lazy
@@ -6,9 +6,11 @@ from django.views import generic, View
 
 from .forms import CustomUserCreationForm, NewAliasForm
 from .models import Alias
+from .mixins import UserVerifiedMixin
 from .utilities import random_address, create_remote_alias
 
-class AliasPage(View):
+class AliasPage(UserVerifiedMixin, View):
+
     def post(self, request):
         form = NewAliasForm(request.POST)
         if form.is_valid():
@@ -30,7 +32,7 @@ class AliasPage(View):
         template = loader.get_template("aliases.html")
         return HttpResponse(template.render(context, request))
 
-class AliasAction(View):
+class AliasAction(UserVerifiedMixin, View):
     def get(self, request, alias_id, method):
         alias = Alias.objects.get(user_id=request.user.id, id=alias_id)
         if not alias:
@@ -55,6 +57,14 @@ class AliasAction(View):
             alias.save(update_fields=["name"])
         
         return redirect("home")
+
+class SettingsPage(LoginRequiredMixin, View):
+    def get(self, request):
+        context = {
+            
+        }
+        template = loader.get_template("settings.html")
+        return HttpResponse(template.render(context, request))
 
 class Register(generic.CreateView):
     form_class = CustomUserCreationForm

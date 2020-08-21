@@ -15,4 +15,4 @@ class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ("email", "first_name")
+        fields = ("email", "first_name", "is_verified")
