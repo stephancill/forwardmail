@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView as GenericLoginView
+from django.contrib.auth.views import LoginView as GenericLoginView 
+from django.contrib.auth.views import PasswordResetView as GenericPasswordResetView
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.shortcuts import render, loader, redirect
@@ -10,7 +11,7 @@ from django_registration.backends.activation.views import RegistrationView as Ge
 import config
 import logging
 
-from .forms import UserCreationForm, NewAliasForm, UserRegistrationForm, UserLoginForm
+from .forms import NewAliasForm, UserRegistrationForm, UserLoginForm
 from .models import Alias
 from .mixins import AccountActivatedMixin
 from .utilities import random_address, create_remote_alias
@@ -88,7 +89,6 @@ class LoginView(GenericLoginView):
 
 
 class RegistrationView(GenericRegistrationView):
-    form = UserRegistrationForm
 
     def send_activation_email(self, user):
         activation_key = self.get_activation_key(user)    
@@ -103,8 +103,15 @@ class RegistrationView(GenericRegistrationView):
             "user_name": user.first_name
         }
         logger.info(message.merge_global_data)
-        message.send()
+
+        if config.DEBUG:
+            print("\n\n", activation_url)
+        else:
+            message.send()
 
 class ResendActivationView(RegistrationView):
     def post(self, request, *args, **kwargs):
         self.send_activation_email(request.user)
+
+# class PasswordResetView(GenericPasswordResetView):
+#     form_class = CustomPasswordResetForm

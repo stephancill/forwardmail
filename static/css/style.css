@@ -196,7 +196,7 @@ form input, .form input {
     width: 100%;
 }
 
-.form-errors {
+.errorlist {
     color: #be0000;
 }
 

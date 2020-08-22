@@ -9,11 +9,6 @@
 <section>
     <div class="form-container card ml-auto mr-auto">
         <h3 class="mb-3">{% block form-title %}Form{% endblock %}</h3>
-        {% if form.errors %}
-        <div class="form-errors">
-            {{form.non_field_errors}} 
-        </div>
-        {% endif %}
         {% block form %}{% endblock %}
     </div>
 </section>

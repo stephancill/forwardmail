@@ -7,14 +7,7 @@
 {% block form %}
 <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
-    <div>
-        <span>{{form.username.label_tag}}</span>
-        {{form.username}}
-    </div>
-    <div>
-        <span>{{form.password.label_tag}}</span>
-        {{form.password}}
-    </div>
+    {{form}}
     <button class="cta-button" type="submit">Login</button>
     <input type="hidden" name="next" value="{{ next }}">
     <input type="hidden" value="login">
@@ -22,6 +15,6 @@
 
 {# Assumes you setup the password_reset view in your URLconf #}
 <p class="text-center"><a class="link" href="{% url 'django_registration_register' %}">Need an account?</a></p>
-<p class="text-center"><a class="link" href="{% url 'password_reset' %}">Lost password?</a></p>
+<p class="text-center"><a class="link" href="{% url 'password_reset' %}">Forgot password?</a></p>
 
 {% endblock %}

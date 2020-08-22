@@ -46,7 +46,7 @@
   
   <div class="row" style="margin-top: 25px;">
     {% if aliases %}
-    <div class="col scrollbar-hidden" style="overflow-x: scroll; scrollbar-width: none;">
+    <div class="col scrollbar-hidden" style="overflow-x: scroll; scrollbar-width: none">
       <table id="alias-table" style="width: 100%;">
         <thead>
           <tr>
@@ -76,11 +76,12 @@
             <td class="sm-none"><span title="{{alias.date}}">{{alias.date|timesince|upto:","}} ago</span> </td>
             <td style="color: #AAAAAA">
               <div class="actions" style="min-width: 100px;">
-                <a href="{% url 'alias_action' alias.id 'disconnect' %}" title="Disconnect">
+                <a href="{% url 'alias_action' alias.id 'disconnect' %}" title="Disconnect"
+                onclick="return confirm('Are you sure you would like to disconnect the alias \'{{alias.name}}\'?')">
                   <clr-icon shape="{% if alias.is_disconnected %}connect{% else %}disconnect{% endif %}" size="27"></clr-icon>
                 </a>
                 <a href="{% url 'alias_action' alias.id 'delete' %}" title="Remove" 
-                onclick="return confirm('Are you sure you would like to delete the alias \'{{alias.name}}\'?')">
+                onclick="return confirm('Are you sure you would like to delete the alias \'{{alias.name}}\'? This action cannot be reversed.')">
                   <clr-icon shape="trash" size="25"></clr-icon>
                 </a>
                 {% url 'alias_action' alias.id 'update' as form_url %}
@@ -94,7 +95,10 @@
       </table>
     </div>
     {% else %}
-    <h2>Aliases you  <a data-toggle="modal" data-target="#create-alias-modal" href="#">create</a> will end up here...</h2>
+    <div class="card" style="width: 100%;">
+      <h3>Aliases you <a data-toggle="modal" data-target="#create-alias-modal" href="#">create</a> will end up here...</h3>
+    </div>
+    
     {% endif %}
   </div>
 </section>

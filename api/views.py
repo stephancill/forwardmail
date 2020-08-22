@@ -33,7 +33,6 @@ class ListAliases(APIView):
         return JsonResponse(serializer.data, safe=False)
 
     def post(self, request):
-        print(request.body)
         data = request.POST or json.loads(request.body)
         form = NewAliasForm(data)
         if form.is_valid():
