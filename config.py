@@ -17,5 +17,5 @@ DATABASE_PORT = int(get_env_value("DATABASE_PORT"))
 SECRET_KEY = get_env_value("SECRET_KEY")
 PROXY_DOMAIN = get_env_value("PROXY_DOMAIN")
 GANDI_API_KEY = get_env_value("GANDI_API_KEY")
-DEBUG = bool(int(get_env_value("DEBUG")))
+DEBUG = get_env_value("DEBUG").lower() == "true"
 MAILGUN_API_KEY = get_env_value("MAILGUN_API_KEY")

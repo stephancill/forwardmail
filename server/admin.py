@@ -1,12 +1,12 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin as GenericUserAdmin
 from .models import User
-from .forms import CustomUserChangeForm, CustomUserCreationForm
+from .forms import UserCreationForm, UserCreationForm
 
 
-class CustomUserAdmin(UserAdmin):
-    add_form = CustomUserCreationForm
-    form = CustomUserChangeForm
+class UserAdmin(GenericUserAdmin):
+    add_form = UserCreationForm
+    form = UserCreationForm
     model = User
     list_display = ('email', 'is_staff', 'is_active',)
     list_filter = ('email', 'is_staff', 'is_active',)
@@ -24,4 +24,4 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email', 'first_name')
 
 
-admin.site.register(User, CustomUserAdmin)
+admin.site.register(User, UserAdmin)

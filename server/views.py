@@ -1,23 +1,26 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView as GenericLoginView
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.shortcuts import render, loader, redirect
 from django.urls import reverse_lazy
 from django.views import generic, View
-from django_registration.backends.activation.views import RegistrationView
+from django_registration.backends.activation.views import RegistrationView as GenericRegistrationView
 
 import config
 import logging
 
-from .forms import CustomUserCreationForm, NewAliasForm, UserRegistrationForm, UserLoginForm
+from .forms import UserCreationForm, NewAliasForm, UserRegistrationForm, UserLoginForm
 from .models import Alias
-from .mixins import UserVerifiedMixin
+from .mixins import AccountActivatedMixin
 from .utilities import random_address, create_remote_alias
 
 logger = logging.getLogger(__name__)
 
-class AliasPage(UserVerifiedMixin, View):
+class AuthenticatedBasePage(AccountActivatedMixin, View):
+    pass
+
+class AliasPage(AuthenticatedBasePage):
 
     def post(self, request):
         form = NewAliasForm(request.POST)
@@ -40,7 +43,7 @@ class AliasPage(UserVerifiedMixin, View):
         template = loader.get_template("aliases.html")
         return render(request, "aliases.html", context=context)
 
-class AliasAction(UserVerifiedMixin, View):
+class AliasAction(AuthenticatedBasePage):
     def get(self, request, alias_id, method):
         alias = Alias.objects.get(user_id=request.user.id, id=alias_id)
         if not alias:
@@ -80,11 +83,11 @@ class SettingsPage(LoginRequiredMixin, View):
         
         return redirect("settings")
 
-class CustomLoginView(LoginView):
+class LoginView(GenericLoginView):
     authentication_form = UserLoginForm
 
 
-class CustomRegistrationView(RegistrationView):
+class RegistrationView(GenericRegistrationView):
     form = UserRegistrationForm
 
     def send_activation_email(self, user):
@@ -102,6 +105,6 @@ class CustomRegistrationView(RegistrationView):
         logger.info(message.merge_global_data)
         message.send()
 
-class ResendActivationView(CustomRegistrationView):
+class ResendActivationView(RegistrationView):
     def post(self, request, *args, **kwargs):
         self.send_activation_email(request.user)
