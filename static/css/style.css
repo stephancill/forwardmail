@@ -7,8 +7,12 @@
 
 body {
     background: linear-gradient(135.77deg, #FFB084 6.97%, #A8B4FF 97%);
-    font-family: Inter;
+    font-family: Inter !important;
     color: black;
+}
+
+body, body * {
+    font-family: Inter !important;
 }
 
 .body {
@@ -104,8 +108,6 @@ section {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-
 button {
     border: none;
     background: none;
@@ -200,6 +202,11 @@ form input, .form input {
 
 .errorlist {
     color: #be0000;
+}
+
+.helptext {
+    font-size: 14px;
+    color: #3b3b3b;
 }
 
 @media only screen 
