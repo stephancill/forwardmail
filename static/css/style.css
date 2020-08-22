@@ -8,8 +8,11 @@
 body {
     background: linear-gradient(135.77deg, #FFB084 6.97%, #A8B4FF 97%);
     font-family: Inter;
-    min-height: 100vh;
-    padding-bottom: 100px;
+    color: black;
+}
+
+.body {
+    min-height: 80vh;
 }
 
 h1 {
@@ -33,7 +36,7 @@ h5 {
 
 a, link {
     text-decoration: none !important;
-    color: var(--primary-dark);
+    color: var(--secondary-dark);
 }
 
 .link:hover {
@@ -52,7 +55,6 @@ nav {
 
 .nav-link {
     padding-left: 37px !important;
-    /* color: black !important; */
 }
 
 .nav-link:hover {
