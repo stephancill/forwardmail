@@ -14,6 +14,8 @@ pillow = "*"
 django-activeurl = "*"
 django-registration = "*"
 django-anymail = {extras = ["mailgun"],version = "*"}
+gunicorn = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.6"
