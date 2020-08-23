@@ -20,7 +20,6 @@ const extensionReloaderPlugin =
         reloadPage: true,
         entries: {
           // TODO: reload manifest on update
-          contentScript: 'contentScript',
           background: 'background',
           extensionPage: ['popup', 'options'],
         },
@@ -59,7 +58,6 @@ module.exports = {
   entry: {
     manifest: './source/manifest.json',
     background: './source/scripts/background.js',
-    contentScript: './source/scripts/contentScript.js',
     popup: './source/scripts/popup.js',
     options: './source/scripts/options.js',
     vendor: [getStatic('vendor/custom-elements.min.js'), getStatic('vendor/clr-icons.min.js')],
