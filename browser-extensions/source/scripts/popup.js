@@ -8,8 +8,7 @@ function openWebpage(url) {
 }
 
 function openForwardMailWebsite() {
-  // TODO: Get this from environment variable
-  openWebpage("http://localhost:8080")
+  openWebpage(SERVER_ENDPOINT)
 }
 
 function searchButtonPressed() {
@@ -59,7 +58,11 @@ async function handleSignIn() {
   let token = json.token
 
   if (token) {
-    browser.storage.sync.set({token})
+    await browser.storage.sync.set({token})
+    let user = await APICall("self", {
+      method: "GET"
+    })
+    await browser.storage.sync.set({user})
     document.dispatchEvent(new Event("DOMContentLoaded"))
   } else {
     // TODO: Show error
@@ -70,15 +73,17 @@ function preventDefault(e) {
   e.preventDefault()
 }
 
-document.addEventListener('DOMContentLoaded', handlPageLoad)
+document.addEventListener('DOMContentLoaded', handlePageLoad)
 
-async function handlPageLoad() {
-  
+async function handlePageLoad() {
+  console.log(SERVER_ENDPOINT)
+
   Array.from(document.querySelectorAll("form")).forEach(form => {
     form.addEventListener("submit", preventDefault)
   })
 
   let token = await browser.storage.sync.get("token")
+  let user = (await browser.storage.sync.get("user")).user
   if ("token" in token) {
     document.getElementById("auth").style.display = "none"
     document.getElementById("popup").style.display = ""
@@ -95,10 +100,10 @@ async function handlPageLoad() {
   try {
     activeDomain = activeTab.url.split("://")[1].split("/")[0]
   } catch (error) {
-    console.log("Using title")
+    
   }
-  
   document.getElementById("new-alias-name").value = activeDomain
+  document.getElementById("user-email").innerHTML = user.email
 
   aliases = await APICall("aliases", {
     method: "GET"

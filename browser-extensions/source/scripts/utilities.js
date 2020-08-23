@@ -1,10 +1,9 @@
 import browser from 'webextension-polyfill';
 
-let endpoint = "http://localhost:8080/api/v1"
+export let endpoint = `${SERVER_ENDPOINT}/api/v1`
 
 export async function APICall(method, options, failureCallback=null) {
   let token = (await browser.storage.sync.get("token")).token
-  console.log((await browser.storage.sync.get("token")).token)
   let response = await fetch(`${endpoint}/${method}`, {
     method: "GET",
     headers: {
@@ -26,5 +25,6 @@ export async function APICall(method, options, failureCallback=null) {
 
 export async function logout() {
   await browser.storage.sync.remove("token")
+  await browser.storage.sync.remove("user")
   document.dispatchEvent(new Event("DOMContentLoaded"))
 }

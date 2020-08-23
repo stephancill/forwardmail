@@ -9,7 +9,6 @@ const ExtensionReloader = require('webpack-extension-reloader');
 const WextManifestWebpackPlugin = require('wext-manifest-webpack-plugin');
 const FixStyleOnlyEntriesPlugin = require('webpack-fix-style-only-entries');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const targetBrowser = process.env.TARGET_BROWSER;
@@ -46,7 +45,7 @@ function getStatic(dir) {
 }
 
 module.exports = {
-  devtool: 'eval-source-map', // https://github.com/webpack/webpack/issues/1194#issuecomment-560382342
+  devtool: 'cheap-module-source-map', // https://github.com/webpack/webpack/issues/1194#issuecomment-560382342
 
   mode: nodeEnv,
 
@@ -139,6 +138,9 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      SERVER_ENDPOINT:  JSON.stringify(nodeEnv === "development" ? "http://localhost:8080" : "https://forwardmail.herokuapp.com")
+    }),
     new webpack.ProgressPlugin(),
     // Generate manifest.json
     new WextManifestWebpackPlugin(),

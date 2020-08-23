@@ -14,7 +14,7 @@ output = args.output
 if args.sizes:
     sizes = [int(x) for x in args.sizes.split(",")]
 else:
-    sizes = [16, 32, 48, 57, 60, 72, 96, 114, 128, 150, 152, 160, 180, 192, 310]
+    sizes = [16, 32, 48, 57, 60, 64, 72, 96, 114, 128, 150, 152, 160, 180, 192, 310]
 
 Path(output).mkdir(parents=True, exist_ok=True)
 

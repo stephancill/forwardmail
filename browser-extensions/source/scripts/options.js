@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   let user = await APICall("self", {
       method: "GET"
   }, () => null)
-  console.log(user)
   if (user) {
     document.getElementById("user-email").innerHTML = user.email
     document.getElementById("logout-button").addEventListener("click", () => {

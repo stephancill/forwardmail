@@ -20,14 +20,12 @@ emailElements.forEach(e => {
       if (event.clipboardData) {
         var span =  e.querySelector("span")
         event.clipboardData.setData("text/plain", span.textContent)
-        console.log(event.clipboardData.getData("text"))
         showTooltip(span, "Copied")
       }
     })
 })
 
 function prepareEditModal({formURL, value}) {
-  console.log("hello")
   const form = document.getElementById("edit-alias-form")
   const csrfField = document.querySelector("#edit-alias-form #csrf-token")
   const textInput = document.getElementById("edit-alias-name-input")
