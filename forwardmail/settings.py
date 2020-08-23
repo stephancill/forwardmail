@@ -29,6 +29,7 @@ DEBUG = config.DEBUG
 
 ALLOWED_HOSTS = ["*"]
 
+SECURE_SSL_REDIRECT = not config.DEBUG
 
 # Application definition
 
