@@ -47,7 +47,7 @@ function getStatic(dir) {
 }
 
 module.exports = {
-  devtool: false,//devtool: "eval-source-map", // https://github.com/webpack/webpack/issues/1194#issuecomment-560382342
+  devtool: nodeEnv === "development" ? "eval-source-map" : false, // https://github.com/webpack/webpack/issues/1194#issuecomment-560382342
 
   stats: {
     all: false,

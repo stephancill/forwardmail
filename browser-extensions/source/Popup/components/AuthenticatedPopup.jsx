@@ -2,7 +2,7 @@ import React from "react";
 import browser from "webextension-polyfill";
 import NewAliasForm from "./NewAliasForm"
 import AliasTable from "./AliasTable"
-import {APICall} from "../../service"
+import {getUser, refreshUser} from "../../service"
 
 class AuthenticatedPopup extends React.Component {
   constructor(props) {
@@ -23,9 +23,7 @@ class AuthenticatedPopup extends React.Component {
         browser.storage.onChanged.addListener(this.handleStorageChange)
     }
 
-    let user = await APICall("self", {
-      method: "GET"
-    })
+    let user = await getUser()
     
     let activeTab = (await browser.tabs.query({active: true}))[0]
     let activeDomain = activeTab.title 
@@ -34,7 +32,8 @@ class AuthenticatedPopup extends React.Component {
     } catch (error) {}
     
     this.setState({user, tabDomain: activeDomain})
-    await browser.storage.sync.set({user})
+    
+    refreshUser()
   }
 
   render() {

@@ -2,7 +2,7 @@ import React from "react"
 import browser from "webextension-polyfill"
 import AliasTableHeader from "./AliasTableHeader"
 import AliasElement from "./AliasElement"
-import {refreshAliases, APICall} from "../../service"
+import {refreshAliases, getAliases, APICall} from "../../service"
 
 class AliasTable extends React.Component {
   constructor(props) {
@@ -18,12 +18,7 @@ class AliasTable extends React.Component {
     console.log(id, action)
     let alias = this.state.aliases.find(e => e.id == id)
     if (action == "copy") {
-      window.navigator.permissions.query({name: "clipboard-write"}).then(result => {
-        if (result.state == "granted" || result.state == "prompt") {
-            window.navigator.clipboard.writeText(alias.proxy_address)
-            // TODO: Display "Copied tooltip"
-        }
-      });
+      window.navigator.clipboard.writeText(alias.proxy_address)
     } else if (action == "disconnect" || action == "delete") {
       if (action == "delete") {
         if (!confirm("Are you sure you would like to permanently delete this alias? This action cannot be undone.")) {
@@ -56,7 +51,7 @@ class AliasTable extends React.Component {
     if (!browser.storage.onChanged.hasListener(this.handleStorageChange)) {
       browser.storage.onChanged.addListener(this.handleStorageChange)
     }
-    let aliases = (await browser.storage.sync.get("aliases")).aliases || []
+    let aliases = (await getAliases()) || []
     this.setState({aliases})
     this.handleSearchFormChange()
     

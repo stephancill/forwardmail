@@ -34,7 +34,7 @@ class AliasTableHeader extends React.Component {
       <div id="table-header" style={{background: this.state.isSearching ? "#FDFDFD" : "none"}}>
         <span id="user-info" style={{display: this.state.isSearching ? "none" : ""}}>
           <h5 style={{marginBottom: "4px"}}>Aliases</h5>
-          <p id="user-email" style={{margin: "0px"}}>{this.props.user.email}</p>
+          <p id="user-email" style={{margin: "0px"}}>{this.props.user ? this.props.user.email : ""}</p>
         </span>
           <form id="search-form" onReset={this.handleSearchFormReset}></form>
         <span>

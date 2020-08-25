@@ -1,5 +1,5 @@
 import React from "react";
-import {APICall, logout} from "./../service"
+import {getUser, refreshUser, logout} from "./../service"
 import browser from "webextension-polyfill"
 
 class Options extends React.Component {
@@ -20,10 +20,10 @@ class Options extends React.Component {
     if (!browser.storage.onChanged.hasListener(this.handleStorageChange)) {
         browser.storage.onChanged.addListener(this.handleStorageChange)
     }
-    let user = await APICall("self", {
-      method: "GET"
-    })
+
+    let user = await getUser()
     this.setState({user: user})
+    refreshUser()
   }
 
   render() {
