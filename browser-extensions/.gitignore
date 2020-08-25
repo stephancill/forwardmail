@@ -101,7 +101,7 @@ public/
 *.scss.map
 
 ## Build directory
-extension
+extension/
 dist/
 .awcache
 
@@ -110,4 +110,4 @@ dist/
 .yarn/*
 !.yarn/releases
 !.yarn/plugins
-.pnp.* 
+.pnp.*

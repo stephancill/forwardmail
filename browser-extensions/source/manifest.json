@@ -16,7 +16,10 @@
   "permissions": [
     "activeTab",
     "storage",
-    "clipboardWrite"
+    "clipboardWrite",
+    "https://forwardmail.herokuapp.com/*",
+    "https://forwardmail.rocks/*",
+    "http://localhost:8080/*"
   ],
 
   "__dev__content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
@@ -55,13 +58,6 @@
     "page": "options.html",
     "open_in_tab": true,
     "__chrome__chrome_style": false
-  },
-
-  "background": {
-    "scripts": [
-      "js/background.bundle.js"
-    ],
-    "__chrome|opera__persistent": false
   },
 
   "content_scripts": []

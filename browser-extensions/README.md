@@ -2,7 +2,7 @@
 <p align="center">Web Extension starter to build "Write Once Run on Any Browser" extension</p>
 <div align="center">
   <a href="https://travis-ci.com/abhijithvijayan/web-extension-starter">
-    <img src="https://travis-ci.com/abhijithvijayan/web-extension-starter.svg?branch=master" alt="Travis Build" />
+    <img src="https://travis-ci.com/abhijithvijayan/web-extension-starter.svg?branch=react-javascript" alt="Travis Build" />
   </a>
   </a>
   <a href="https://david-dm.org/abhijithvijayan/web-extension-starter">
@@ -28,29 +28,30 @@
 </p>
 <hr />
 
-❤️ it? ⭐️ it on [GitHub](https://github.com/abhijithvijayan/web-extension-starter/stargazers) or [Tweet](https://twitter.com/intent/tweet?text=Check%20out%20web-extension-starter%21%20by%20%40_abhijithv%0A%0AWeb%20Extension%20starter%20to%20build%20%22Write%20Once%20Run%20on%20Any%20Browser%22%20extension.%20https%3A%2F%2Fgithub.com%2Fabhijithvijayan%2Fweb-extension-starter%0A%0A%23javascript%20%23react%20%23typescript%20%23sass%20%23webextension%20%23chrome%20%23firefox%20%23opera) about it.
+❤️ it? ⭐️ it on [GitHub](https://github.com/abhijithvijayan/web-extension-starter) or [Tweet](https://twitter.com/intent/tweet?text=Check%20out%20web-extension-starter%21%20by%20%40_abhijithv%0A%0AWeb%20Extension%20starter%20to%20build%20%22Write%20Once%20Run%20on%20Any%20Browser%22%20extension.%20https%3A%2F%2Fgithub.com%2Fabhijithvijayan%2Fweb-extension-starter%0A%0A%23javascript%20%23react%20%23typescript%20%23sass%20%23webextension%20%23chrome%20%23firefox%20%23opera) about it.
 
-👶🏼 **HTML + JavaScript** = [This](https://github.com/abhijithvijayan/web-extension-starter/tree/master) branch
+😨 **React + JavaScript** = [This](https://github.com/abhijithvijayan/web-extension-starter/tree/react-javascript) branch
 
 🧙‍♂️ **React + TypeScript** = Checkout [react-typescript](https://github.com/abhijithvijayan/web-extension-starter/tree/react-typescript) branch
 
-😨 **React + JavaScript** = Checkout [react-javascript](https://github.com/abhijithvijayan/web-extension-starter/tree/react-javascript) branch
+👶🏼 **HTML + JavaScript** = Checkout [master](https://github.com/abhijithvijayan/web-extension-starter/tree/master) branch
 
 ## Features
 
 - Cross Browser Support (Web-Extensions API)
 - Browser Tailored Manifest generation
 - Automatic build on code changes
-- Automatic extension reload on browser
 - Auto packs browser specific build files
-- ES6 modules support
 - SASS styling
+- ES6 modules support
+- React UI Library by default
+- Smart reload
 
 ## Browser Support
 
 | [![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png)](/) | [![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png)](/) | [![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png)](/) | [![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png)](/) | [![Yandex](https://raw.github.com/alrra/browser-logos/master/src/yandex/yandex_48x48.png)](/) | [![Brave](https://raw.github.com/alrra/browser-logos/master/src/brave/brave_48x48.png)](/) | [![vivaldi](https://raw.github.com/alrra/browser-logos/master/src/vivaldi/vivaldi_48x48.png)](/) |
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 49 & later ✔ | 52 & later ✔ | 36 & later ✔ | 79 & later ✔ | Latest ✔ | Latest ✔ | Latest ✔
+| --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| 49 & later ✔                                                                                  | 52 & later ✔                                                                                     | 36 & later ✔                                                                               | 79 & later ✔                                                                            | Latest ✔                                                                                      | Latest ✔                                                                                   | Latest ✔                                                                                         |
 
 ## Demo
 
@@ -61,7 +62,7 @@
 Create a new directory and run
 
 ```
-curl -fsSL https://github.com/abhijithvijayan/web-extension-starter/archive/master.tar.gz | tar -xz --strip-components=1
+curl -fsSL https://github.com/abhijithvijayan/web-extension-starter/archive/react-javascript.tar.gz | tar -xz --strip-components=1
 ```
 
 ## 🚀 Quick Start
@@ -85,7 +86,7 @@ Then run the following:
 ### Development
 
 - `yarn install` to install dependencies.
-- To watch file changes in developement
+- To watch file changes in development
 
   - Chrome
     - `yarn run dev:chrome`
@@ -123,7 +124,7 @@ If you don't want to use `package.json` version, you can disable the option [her
 
 ### Generating browser specific manifest.json
 
-Update `src/manifest.json` file with browser vendor prefixed manifest keys
+Update `source/manifest.json` file with browser vendor prefixed manifest keys
 
 ```js
 {
@@ -144,7 +145,7 @@ if the vendor is `chrome` this compiles to:
 
 ---
 
-Add keys to multiple vendors by seperating them with | in the prefix
+Add keys to multiple vendors by separating them with | in the prefix
 
 ```
 {
