@@ -8,6 +8,7 @@ from django.shortcuts import render, loader, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic, View
 from django_registration.backends.activation.views import RegistrationView as GenericRegistrationView
+from rest_framework.authtoken.models import Token
 
 import config
 import hashlib
@@ -93,42 +94,51 @@ class SettingsPage(LoginRequiredMixin, View):
 class LoginView(GenericLoginView):
     authentication_form = UserLoginForm
 
-class GoogleLoginView(View):
+class LaunchExtensionView(View):
     def get(self, request):
-        state = request.GET.get("state")
-        code = request.GET.get("code")
-        r = requests.post("https://oauth2.googleapis.com/token", data={
-            "code": code,
-            "client_id": config.GOOGLE_OAUTH_CLIENT_ID,
-            "client_secret": config.GOOGLE_OAUTH_SECRET,
-            "redirect_uri": config.SERVER_ENDPOINT + reverse("login_google"),
-            "grant_type": "authorization_code"
-        })
-        response = r.json()
-        user_info = jwt.decode(response.get("id_token"), verify=False)
-        email = user_info.get("email")
-        first_name = user_info.get("given_name")
-        if email:
-            user = authenticate(request, username=email, is_external=True)
-            if not user:
-                user = User.objects.create_user(email, first_name=first_name, is_external=True, is_active=True)
-                print(user)
-            login(request, user)
+        token, created = Token.objects.get_or_create(user=request.user)
+        context = {"token": token.key}
+        return render(request, "launch-extension.html", context=context)
+
+def google_oauth_redirect_handler(request):
+    state = request.GET.get("state")
+    code = request.GET.get("code")
+    r = requests.post("https://oauth2.googleapis.com/token", data={
+        "code": code,
+        "client_id": config.GOOGLE_OAUTH_CLIENT_ID,
+        "client_secret": config.GOOGLE_OAUTH_SECRET,
+        "redirect_uri": config.SERVER_ENDPOINT + reverse("google_redirect_handler"),
+        "grant_type": "authorization_code"
+    })
+    response = r.json()
+    user_info = jwt.decode(response.get("id_token"), verify=False)
+    email = user_info.get("email")
+    first_name = user_info.get("given_name")
+    if email:
+        user = authenticate(request, username=email, is_external=True)
+        if not user:
+            user = User.objects.create_user(email, first_name=first_name, is_external=True, is_active=True)
+            print(user)
+        login(request, user, backend="server.auth_backend.ExternalAuthBackend")
+
+    if state.split(",")[1] == "extension":
+        return redirect("launch_extension")
+    else:
         return redirect("home")
 
-    def post(self, request):
-        state = hashlib.sha256(os.urandom(1024)).hexdigest()
-        request.session["state"] = state
-        params = {
-            "client_id": config.GOOGLE_OAUTH_CLIENT_ID,
-            "response_type": "code",
-            "scope": "openid email profile",
-            "redirect_uri": config.SERVER_ENDPOINT + reverse("login_google"),
-            "state": state # TODO: Store and validate state
-        }
-        params_encoded = "&".join([key + "=" + value for key, value in params.items()])
-        url = "https://accounts.google.com/o/oauth2/v2/auth?" + params_encoded
-        return redirect(url)
+def google_oauth_login(request):
+    state = hashlib.sha256(os.urandom(1024)).hexdigest() + "," + request.GET.get("ref", "")
+    request.session["state"] = state
+    params = {
+        "client_id": config.GOOGLE_OAUTH_CLIENT_ID,
+        "response_type": "code",
+        "scope": "openid email profile",
+        "redirect_uri": config.SERVER_ENDPOINT + reverse("google_redirect_handler"),
+        "state": state # TODO: Store and validate state
+    }
+    params_encoded = "&".join([key + "=" + value for key, value in params.items()])
+    url = "https://accounts.google.com/o/oauth2/v2/auth?" + params_encoded
+    return redirect(url)
 
 class RegistrationView(GenericRegistrationView):
 

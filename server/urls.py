@@ -18,7 +18,9 @@ urlpatterns = [
     path('accounts/register/', views.RegistrationView.as_view(form_class=forms.UserRegistrationForm), name='django_registration_register'),
     path('accounts/', include('django_registration.backends.activation.urls')),
     path('accounts/login/', views.LoginView.as_view(), name='login'),
-    path('accounts/login/google', views.GoogleLoginView.as_view(), name='login_google'),
+    path('accounts/login/google_redirect', views.google_oauth_redirect_handler, name='google_redirect_handler'),
+    path('accounts/login/google', views.google_oauth_login, name='google_login'),
+    path('accounts/login/extension', views.LaunchExtensionView.as_view(), name='launch_extension'),
     path('accounts/password_reset/', PasswordResetView.as_view(form_class=forms.PasswordResetForm), name='password_change'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

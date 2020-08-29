@@ -13,7 +13,7 @@
     <input type="hidden" value="login">
 </form>
 <p>OR</p>
-<form method="post" action="{% url 'login_google' %}">
+<form method="post" action="{% url 'google_login' %}">
     {% csrf_token %}
     <button type="submit">
         <img src="/static/img/google-button.png" alt="">

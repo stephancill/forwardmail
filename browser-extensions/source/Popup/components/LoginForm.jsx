@@ -41,7 +41,7 @@ class LoginForm extends React.Component {
     } else {
       // TODO: Show error
     }
-    window.setTimeout(() => {this.setState({isLoading: true})}, 1000)
+    this.setState({isLoading: false})
     
   }
 

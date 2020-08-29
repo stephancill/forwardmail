@@ -60,5 +60,21 @@
     "__chrome__chrome_style": false
   },
 
-  "content_scripts": []
+  "content_scripts": [{
+    "matches": [
+      "http://localhost:8080/accounts/login/extension",
+      "https://forwardmail.rocks/accounts/login/extension",
+      "https://forwardmail.herokuapp.com/accounts/login/extension"
+    ],
+    "js": [
+      "js/contentScript.bundle.js"
+    ]
+  }],
+
+  "background": {
+    "scripts": [
+      "js/background.bundle.js"
+    ],
+    "__chrome|opera__persistent": false
+  }
 }

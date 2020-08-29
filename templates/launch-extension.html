@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Extension{% endblock %}
+
+{% block body %}
+<section class="card mr-auto ml-auto">
+    <p>Check your browser extension</p>
+    <input type="hidden" id="token" value="{{token}}">
+</section>
+{% endblock %}

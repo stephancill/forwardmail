@@ -16,6 +16,20 @@ const destPath = path.join(__dirname, "extension");
 const nodeEnv = process.env.NODE_ENV || "development";
 const targetBrowser = process.env.TARGET_BROWSER;
 
+
+// "content_scripts": [{
+//   "matches": [
+//     "http://localhost:8080/accounts/login/extension",
+//     "https://forwardmail.rocks/accounts/login/extension",
+//     "https://forwardmail.herokuapp.com/accounts/login/extension"
+//   ],
+//   "js": ["external-login.js"]
+// }],
+
+// "background": {
+//   "scripts": ["background.js"]
+// }
+
 const extensionReloaderPlugin =
   nodeEnv === "development"
     ? new ExtensionReloader({
@@ -23,6 +37,8 @@ const extensionReloaderPlugin =
         reloadPage: true,
         entries: {
           // TODO: reload manifest on update
+          contentScript: 'contentScript',
+          background: 'background',
           extensionPage: ["popup", "options"],
         },
       })
@@ -60,6 +76,8 @@ module.exports = {
 
   entry: {
     manifest: path.join(sourcePath, "manifest.json"),
+    background: path.join(sourcePath, "background.js"),
+    contentScript: path.join(sourcePath, "external-login.js"),
     popup: path.join(sourcePath, "Popup", "index.jsx"),
     options: path.join(sourcePath, "Options", "index.jsx"),
     vendor: [getStatic('vendor/custom-elements.min.js'), getStatic('vendor/clr-icons.min.js')],
@@ -167,6 +185,7 @@ module.exports = {
     new CopyWebpackPlugin([
       {from: getStatic('favicons') + '/favicon-?(16|32|48|128).png', to: 'static/icons', flatten: true},
       {from: getStatic('fonts'), to: 'static/fonts', flatten: true},
+      {from: getStatic('img', 'google-button.png'), to: 'static/img', flatten: true},
     ]),
     // plugin to enable browser reloading in development mode
     extensionReloaderPlugin,
