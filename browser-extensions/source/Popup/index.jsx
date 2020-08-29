@@ -23,6 +23,7 @@ class Popup extends React.Component {
     }
 
     async componentDidMount() {
+        console.log(browser.runtime.getURL("/"))
         if (!browser.storage.onChanged.hasListener(this.handleStorageChange)) {
             browser.storage.onChanged.addListener(this.handleStorageChange)
         }

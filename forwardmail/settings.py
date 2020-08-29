@@ -154,7 +154,11 @@ LOGIN_URL = "/accounts/login"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 ACCOUNT_ACTIVATION_DAYS = 7
-AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.AllowAllUsersModelBackend"]
+AUTHENTICATION_BACKENDS = [
+    "server.auth_backend.ExternalAuthBackend",
+    "django.contrib.auth.backends.AllowAllUsersModelBackend",
+    
+]
 
 
 # REST Framework

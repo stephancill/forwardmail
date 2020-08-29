@@ -16,6 +16,7 @@ django-registration = "*"
 django-anymail = {extras = ["mailgun"],version = "*"}
 gunicorn = "*"
 whitenoise = "*"
+pyjwt = "*"
 
 [requires]
 python_version = "3.6"

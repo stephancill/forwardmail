@@ -18,6 +18,7 @@ urlpatterns = [
     path('accounts/register/', views.RegistrationView.as_view(form_class=forms.UserRegistrationForm), name='django_registration_register'),
     path('accounts/', include('django_registration.backends.activation.urls')),
     path('accounts/login/', views.LoginView.as_view(), name='login'),
+    path('accounts/login/google', views.GoogleLoginView.as_view(), name='login_google'),
     path('accounts/password_reset/', PasswordResetView.as_view(form_class=forms.PasswordResetForm), name='password_change'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

@@ -12,6 +12,13 @@
     <input type="hidden" name="next" value="{{ next }}">
     <input type="hidden" value="login">
 </form>
+<p>OR</p>
+<form method="post" action="{% url 'login_google' %}">
+    {% csrf_token %}
+    <button type="submit">
+        <img src="/static/img/google-button.png" alt="">
+    </button>
+</form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
 <p class="text-center"><a class="link" href="{% url 'django_registration_register' %}">Need an account?</a></p>

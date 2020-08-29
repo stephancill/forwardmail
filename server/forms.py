@@ -47,9 +47,9 @@ class UserLoginForm(GenericAuthenticationForm):
 class UserCreationForm(GenericUserCreationForm):
     class Meta(GenericUserCreationForm.Meta):
         model = User
-        fields = ("email", "first_name")
+        fields = ("first_name", "email")
 
 class UserCreationForm(GenericUserChangeForm):
     class Meta:
         model = User
-        fields = ("email", "first_name")
+        fields = ("first_name", "email")

@@ -19,3 +19,5 @@ PROXY_DOMAIN = get_env_value("PROXY_DOMAIN")
 GANDI_API_KEY = get_env_value("GANDI_API_KEY")
 DEBUG = get_env_value("DEBUG").lower() == "true"
 MAILGUN_API_KEY = get_env_value("MAILGUN_API_KEY")
+GOOGLE_OAUTH_CLIENT_ID = get_env_value("GOOGLE_OAUTH_CLIENT_ID")
+GOOGLE_OAUTH_SECRET = get_env_value("GOOGLE_OAUTH_SECRET")
