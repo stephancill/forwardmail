@@ -15,7 +15,8 @@ class AliasesPage extends StatefulWidget {
 
   const AliasesPage(this._streamController);
 
-  signOut() {
+  signOut() async {
+    await logout();
     _streamController.add(AuthenticationState.signedOut());
   }
   @override
@@ -95,6 +96,8 @@ class _AliasesPageState extends State<AliasesPage> {
               icon: Icon(Icons.power_settings_new),
               onPressed: () {
                 // TODO: Log user out
+                AliasesPage widget = context.widget;
+                widget.signOut();
               },
             ),
           ]
