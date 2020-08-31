@@ -85,6 +85,7 @@ class _SignInPageState extends State<SignInPage> {
     final email = TextFormField(
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
+      autocorrect: false,
       decoration: InputDecoration(
         hintText: "Email",
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),

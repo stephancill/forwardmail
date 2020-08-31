@@ -7,7 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import "models/Alias.dart";
 import "models/User.dart";
 
-String SERVER_ENDPOINT = "http://10.0.2.2:8080/api/v1";
+import "env.dart";
+
+String SERVER_ENDPOINT = environment["SERVER_ENDPOINT"];
 
 Future<bool> authenticateUser(String email, String password) async {
   var uri = Uri.parse("$SERVER_ENDPOINT/token");
