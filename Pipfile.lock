@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "12e96e94740946fec304817ac3a53a97aef6473f8b2d0928d63948e7f3e3bccb"
+            "sha256": "a2a1689085d98e7f42b72d9c6937dada72821f75d1fa21bdf14338883ac8584d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -83,6 +83,13 @@
                 "sha256:d59d98bdf96a764dcf7a2929a86439d023b283a9152492811c7e44fc47555bc9"
             ],
             "version": "==2.0.0"
+        },
+        "django-invitations": {
+            "hashes": [
+                "sha256:6077807aa641c7abae9ca418e757c8e3940fb0ce60499dba24c100ad57c61442"
+            ],
+            "index": "pypi",
+            "version": "==1.9.3"
         },
         "django-registration": {
             "hashes": [

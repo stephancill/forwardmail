@@ -17,6 +17,7 @@ django-anymail = {extras = ["mailgun"],version = "*"}
 gunicorn = "*"
 whitenoise = "*"
 pyjwt = "*"
+django-invitations = "*"
 
 [requires]
 python_version = "3.6"

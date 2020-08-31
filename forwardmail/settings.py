@@ -40,13 +40,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "server.apps.ServerConfig",
     "api.apps.APIConfig",
     "rest_framework",
     "rest_framework.authtoken",
     "django_activeurl",
     "django_registration",
-    "anymail"
+    "anymail",
+    "invitations"
 ]
 
 MIDDLEWARE = [
@@ -132,6 +134,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+SITE_ID = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -180,3 +183,8 @@ EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 DEFAULT_FROM_EMAIL = "stephan@mail.forwardmail.rocks" 
 SERVER_EMAIL = "stephan@mail.forwardmail.rocks"
 
+
+# Invitations
+
+INVITATIONS_SIGNUP_REDIRECT = "django_registration_register"
+INVITATIONS_INVITATION_ONLY = True
