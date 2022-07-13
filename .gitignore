@@ -144,3 +144,5 @@ cython_debug/
 docker-compose.yml
 
 staticfiles
+
+node_modules
